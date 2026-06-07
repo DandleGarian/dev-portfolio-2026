@@ -107,28 +107,29 @@ No second text typeface. (Earlier note about "Inter" was a false positive — it
 
 ---
 
-## 4. Spacing & layout (authoritative — 8px base)
+## 4. Spacing & layout (authoritative — 8px rhythm on Tailwind's 4px scale)
 
-**Base unit = 8px.** Everything is a multiple. The 4px baseline from the old light scheme is retired.
+We keep **Tailwind's default 4px-granular spacing scale** (`p-1`=4px, `p-2`=8px, `p-4`=16px,
+`p-8`=32px…) rather than overriding `--spacing`. The design **rhythm is 8px** — compose layout
+by preferring even steps — but 4px granularity is retained so fine details (4px bullets, 20px
+mobile margins) stay on-scale and the Stitch exports (built on a 4px grid) translate 1:1.
 
-| Step | px | Common use |
+| Need | Tailwind utility | px |
 |---|---|---|
-| `unit-1` | 8 | tight gaps |
-| `unit-2` | 16 | inner padding |
-| `unit-3` | 24 | gutter / standard padding |
-| `unit-4` | 32 | card padding (default) |
-| `unit-6` | 48 | block spacing |
-| `unit-8` | 64 | large breaks / desktop side margin |
-| `unit-12` | 96 | — |
-| `unit-15` | 120 | section gap |
+| tight gap | `gap-2` | 8 |
+| inner padding | `p-4` | 16 |
+| gutter / standard | `gap-6` / `p-6` | 24 |
+| card padding | `p-8` | 32 |
+| block spacing | `mb-12` | 48 |
+| desktop side margin | `px-16` | 64 |
+| section gap | `py-30` (or `py-[120px]`) | 120 |
 
 - **Grid:** 12-col desktop · 6-col tablet · 2-col mobile.
-- **Container max:** 1280px.
-- **Side margins:** mobile 20px · desktop 64px.
+- **Container max:** 1280px → `max-w-content` (`--container-content: 80rem`).
+- **Side margins:** mobile 20px (`px-5`) · desktop 64px (`px-16`).
 - **Section gap:** 120px between major blocks.
-- **Resolved (mixed scales):** use the `unit-*` scale everywhere. Do **not** mix raw Tailwind
-  spacing (`mb-8`, `mb-6`…) with `mb-unit-8` — they are different pixel values. When porting,
-  map Tailwind defaults to the unit scale (`mb-8` 32px → `unit-4`, etc.).
+- **Resolved (mixed scales):** the old `unit-*` custom scale is retired — use the standard
+  numeric utilities above. Stitch values map 1:1 (their `mb-8`=32px → our `mb-8`=32px).
 
 ---
 

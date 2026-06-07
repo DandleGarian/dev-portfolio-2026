@@ -1,14 +1,20 @@
 ---
 import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+type PageId = "index" | "work" | "specs" | "contact";
 
 interface Props {
   title: string;
   description?: string;
+  active?: PageId;
 }
 
 const {
   title,
   description = "TERMINAL_VELOCITY — portfolio of a solid, reliable developer.",
+  active = "index",
 } = Astro.props;
 ---
 
@@ -32,7 +38,11 @@ const {
     />
     <title>{title}</title>
   </head>
-  <body>
+  <body
+    class="tech-grid-bg flex min-h-screen flex-col bg-background text-foreground antialiased selection:bg-primary selection:text-background"
+  >
+    <Header active={active} />
     <slot />
+    <Footer />
   </body>
 </html>

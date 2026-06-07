@@ -25,6 +25,7 @@
   --on-primary: #131313;
   --error: #ffb4ab;
   --error-bg: #93000a;
+  --grid-line: #1a1a1a; /* decorative tech-grid background */
 }
 
 /* PROVISIONAL — refine when light mode is built. Accent stays #ff6b00. */
@@ -41,6 +42,7 @@
   --on-primary: #ffffff;
   --error: #ba1a1a;
   --error-bg: #ffdad6;
+  --grid-line: #ededed; /* provisional */
 }
 
 /* colors → utilities (inline so opacity modifiers + theme swap both work) */
@@ -63,8 +65,10 @@
   /* Type — JetBrains Mono everywhere (icons: Material Symbols Outlined). */
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* 8px spacing base → p-1=8px · p-2=16px · p-3=24px · p-4=32px · p-8=64px · p-15=120px */
-  --spacing: 0.5rem;
+  /* Spacing: keep Tailwind's default 4px-granular scale (p-1=4px, p-2=8px,
+     p-4=16px, p-8=32px…). Compose layout on an 8px rhythm by preferring even
+     steps; 4px granularity keeps fine details (4px bullets, 20px margins)
+     on-scale. See DESIGN-SYSTEM.md §4. */
 
   /* content container max = 1280px → max-w-content */
   --container-content: 80rem;
@@ -111,4 +115,38 @@ html {
   background-color: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Brand-identity effects (CSS-only) ---- */
+
+/* Technical blueprint grid behind all content */
+.tech-grid-bg {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+}
+
+/* Terminal cursor after a heading */
+.blink-cursor::after {
+  content: "_";
+  color: var(--primary);
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blink-cursor::after {
+    animation: none;
+  }
 }
