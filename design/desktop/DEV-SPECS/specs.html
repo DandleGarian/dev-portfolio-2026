@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>03 // UNIT_SPECIFICATIONS - TERMINAL_VELOCITY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#ff6b00",
+                        "surface-variant": "#353535",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-dim": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary": "#2f3131",
+                        "on-secondary": "#313030",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#393939",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-highest": "#353535",
+                        "on-secondary-fixed-variant": "#474646",
+                        "primary-fixed": "#ffdbcc",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "tertiary-container": "#989999",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary": "#c9c6c5",
+                        "outline-variant": "#5a4136",
+                        "on-background": "#e5e2e1",
+                        "surface-container": "#20201f",
+                        "on-tertiary-container": "#2f3132",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#bab8b7",
+                        "on-primary-fixed": "#351000",
+                        "inverse-primary": "#a04100",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "secondary-container": "#4a4949",
+                        "outline": "#a98a7d",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#ffb693",
+                        "inverse-surface": "#e5e2e1",
+                        "on-surface-variant": "#e2bfb0",
+                        "on-error": "#690005",
+                        "primary-fixed-dim": "#ffb693",
+                        "primary": "#ffb693",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-primary-container": "#572000",
+                        "surface": "#131313",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-primary": "#561f00",
+                        "tertiary": "#c6c6c7",
+                        "background": "#131313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "headline-xl-mobile": ["JetBrains Mono"],
+                        "headline-md": ["JetBrains Mono"],
+                        "headline-lg": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "body-lg": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-xl": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "0", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0a;
+            color: #e5e2e1;
+            background-image:
+                linear-gradient(rgba(53, 53, 53, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(53, 53, 53, 0.2) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .tech-border {
+            border: 1px solid #353535;
+        }
+        .tech-border-active {
+            border: 1px solid #ff6b00;
+        }
+        .tech-divider {
+            border-bottom: 1px solid #353535;
+        }
+        .blinking-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+            color: #ff6b00;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .svg-diagram path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 3s ease forwards;
+        }
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+<style>
+    @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(200%); }
+    }
+    .animate-scanline {
+        animation: scanline 4s linear infinite;
+    }
+</style></head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col pt-[80px]">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-background/80 backdrop-blur-md border-b border-surface-variant transition-all duration-200 ease-in-out">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface">
+            TERMINAL_VELOCITY
+        </div>
+<nav class="hidden md:flex gap-8">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container-highest/10 px-2 py-1" href="#">01 // INDEX</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container-highest/10 px-2 py-1" href="#">02 // WORK</a>
+<a class="font-label-md text-label-md text-primary-container border-b border-primary-container pb-1 transition-colors hover:bg-surface-container-highest/10 px-2" href="#">03 // SPECS</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container-highest/10 px-2 py-1" href="#">04 // SEND</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-container cursor-pointer hover:bg-surface-container-highest/10 p-2 rounded transition-all duration-200 ease-in-out" data-icon="terminal">terminal</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<!-- Header Section -->
+<div class="mb-16 md:mb-24">
+<div class="inline-block border border-surface-variant px-4 py-2 mb-6">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-widest">DIAGNOSTIC_REPORT // ID: 8847-A</span>
+</div>
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface blinking-cursor">
+                03 // UNIT_SPECIFICATIONS
+            </h1>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- HARDWARE_STATS Panel -->
+<div class="col-span-1 md:col-span-7 tech-border bg-surface-container-lowest p-8 relative overflow-hidden group hover:tech-border-active transition-colors duration-300">
+<div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary-container" style="font-size: 48px;">memory</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8 border-b border-surface-variant pb-2 inline-block">HARDWARE_STATS</h2>
+<ul class="space-y-6">
+<li class="flex flex-col md:flex-row md:justify-between tech-divider pb-4">
+<span class="font-label-md text-label-md text-surface-variant uppercase">Core_Processor</span>
+<span class="font-body-md text-body-md text-on-surface">Caffeine-Fueled Synaptic Engine v2.4</span>
+</li>
+<li class="flex flex-col md:flex-row md:justify-between tech-divider pb-4">
+<span class="font-label-md text-label-md text-surface-variant uppercase">Hard_Drive</span>
+<span class="font-body-md text-body-md text-on-surface">100% Motivated (Frequent Defragmentation Req.)</span>
+</li>
+<li class="flex flex-col md:flex-row md:justify-between tech-divider pb-4">
+<span class="font-label-md text-label-md text-surface-variant uppercase">Humor_Core</span>
+<span class="font-body-md text-body-md text-primary-container flex items-center gap-2">
+<div class="w-2 h-2 bg-primary-container"></div>
+                            ENABLED [Warning: Dry]
+                        </span>
+</li>
+<li class="flex flex-col md:flex-row md:justify-between tech-divider pb-4">
+<span class="font-label-md text-label-md text-surface-variant uppercase">Sleep_Mode</span>
+<span class="font-body-md text-body-md text-on-surface">Erratic / Often Overridden</span>
+</li>
+</ul>
+</div>
+<!-- Visual Diagram Panel -->
+<div class="col-span-1 md:col-span-5 tech-border bg-surface-container-lowest p-8 flex flex-col justify-between h-full min-h-[300px]">
+<h3 class="font-label-md text-label-md text-on-surface uppercase mb-4">OPERATOR_IDENTIFICATION // SCAN_ACTIVE</h3>
+<div class="flex-grow flex items-center justify-center svg-diagram"><div class="relative w-full h-full flex items-center justify-center p-4">
+<div class="absolute inset-0 border-2 border-primary-container/30 pointer-events-none after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-[2px] after:bg-primary-container/40 after:animate-scanline"></div>
+<div class="relative overflow-hidden border border-primary-container p-1 bg-surface-container-low shadow-[0_0_15px_rgba(255,107,0,0.1)]">
+<img alt="Operator Identity" class="w-full h-auto grayscale contrast-125 brightness-90 mix-blend-screen opacity-90 sepia-[.2]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3IH2Kzr69cOJ6de36VoZ8IP-QDTzPXA3OJxlqRx--YRBFJdv-pJjh6pXPar4IEjr1SJTo_4TSpBRPBi0lUdzwRxCVSRX04khCkHtoMQ_tXqkSsIEZwNpJr0qttNJgzMDSaz7p6ZAM2dzNLU408BbHOkDeL70ozm-NPuEGXBFRI9e6XeqVEhj6Op3IO6XD0mhlgUNL5QAs9Wt-BRWXHgqImEFO5w89etS7rnTkxvxeZEJVoSSGYoY18WrDCH4Z6Adfk6SJG0NYvI1o" style="filter: brightness(1.1) contrast(1.2) grayscale(100%) sepia(20%) hue-rotate(320deg);"/>
+<div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary-container"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary-container"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary-container"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary-container"></div>
+</div>
+</div></div>
+<div class="mt-4 text-right">
+<span class="font-label-sm text-label-sm text-surface-variant">BIO_METRIC_SCAN // REF: ALPHA_ONE</span>
+</div>
+</div>
+<!-- SYSTEM_HISTORY Timeline -->
+<div class="col-span-1 md:col-span-12 tech-border bg-surface-container-lowest p-8 mt-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8 border-b border-surface-variant pb-2 inline-block">SYSTEM_HISTORY</h2>
+<div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-surface-variant">
+<!-- Event 1 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+<div class="flex items-center justify-center w-10 h-10 rounded-full border border-primary-container bg-surface-container-lowest text-primary-container shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+<div class="w-3 h-3 bg-primary-container"></div>
+</div>
+<div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 tech-border group-hover:tech-border-active transition-colors">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary-container mb-2">v3.0 // CURRENT_BUILD</span>
+<h4 class="font-body-lg text-body-lg text-on-surface mb-1">Senior Architecture Phase</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Optimized logic flows. Reduced redundant anxiety loops by 40%. Implemented advanced structural frameworks.</p>
+</div>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+<div class="flex items-center justify-center w-10 h-10 rounded-full border border-surface-variant bg-surface-container-lowest text-surface-variant shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+<div class="w-3 h-3 bg-surface-variant"></div>
+</div>
+<div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 tech-border">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-surface-variant mb-2">v2.0 // MID_LEVEL_EXPANSION</span>
+<h4 class="font-body-lg text-body-lg text-on-surface mb-1">Full-Stack Integration</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Expanded database connections. UI layer refined. Encountered first major memory leaks (resolved via coffee injection).</p>
+</div>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+<div class="flex items-center justify-center w-10 h-10 rounded-full border border-surface-variant bg-surface-container-lowest text-surface-variant shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+<div class="w-3 h-3 bg-surface-variant"></div>
+</div>
+<div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 tech-border">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-surface-variant mb-2">v1.0 // INITIAL_BOOT</span>
+<h4 class="font-body-lg text-body-lg text-on-surface mb-1">Hello World</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Basic syntax acquired. Frequent segmentation faults. High enthusiasm, low efficiency.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-unit-8 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center border-t border-surface-variant bg-surface-container-lowest mt-auto">
+<div class="font-label-md text-label-md text-primary-container mb-4 md:mb-0">
+            ©2024 TERMINAL_VELOCITY // ALL_SYSTEMS_GO
+        </div>
+<div class="flex gap-6">
+<a class="font-label-sm text-label-sm text-on-tertiary-fixed-variant hover:text-primary-container transition-colors cursor-pointer" href="#">GITHUB</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-fixed-variant hover:text-primary-container transition-colors cursor-pointer" href="#">LINKEDIN</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-fixed-variant hover:text-primary-container transition-colors cursor-pointer" href="#">SOURCE_CODE</a>
+</div>
+</footer>
+</body></html>
