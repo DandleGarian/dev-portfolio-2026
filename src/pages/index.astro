@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="TERMINAL_VELOCITY // INDEX">
+  <main class="mx-auto max-w-content px-3 py-8 md:px-8">
+    <p class="text-label-md uppercase text-primary">01 // INDEX</p>
+    <h1 class="mt-2 text-headline-xl-mobile md:text-headline-xl">
+      SYSTEM_BOOT: HELLO_WORLD
+    </h1>
+    <p class="mt-4 max-w-prose text-body-lg text-muted">
+      Scaffold online. Design tokens wired into Tailwind v4. Static UI to follow.
+    </p>
+
+    <!-- token sanity check (remove once real UI lands) -->
+    <div class="mt-8 flex flex-wrap gap-2 border border-border p-4">
+      <span class="border border-border-active px-3 py-1 text-label-sm uppercase text-primary"
+        >primary</span
+      >
+      <span class="bg-primary px-3 py-1 text-label-sm uppercase text-on-primary">fill</span>
+      <span class="bg-surface px-3 py-1 text-label-sm uppercase text-foreground">surface</span>
+    </div>
+  </main>
+</Layout>
