@@ -73,6 +73,9 @@
   /* content container max = 1280px → max-w-content */
   --container-content: 80rem;
 
+  /* custom breakpoint: ≥500px (below = compact phone) → `xs:` variant */
+  --breakpoint-xs: 500px;
+
   /* Type scale — see DESIGN-SYSTEM.md §3 */
   --text-headline-xl: 3rem; /* 48px */
   --text-headline-xl--line-height: 1.1;
