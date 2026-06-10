@@ -1,0 +1,31 @@
+---
+const social: { label: string; href: string }[] = [
+  { label: "GITHUB", href: "#" },
+  { label: "LINKEDIN", href: "#" },
+  { label: "SOURCE_CODE", href: "#" },
+];
+---
+
+<footer class="mt-auto w-full border-t border-border bg-background">
+  <div
+    class="mx-auto flex w-full max-w-content flex-col items-center gap-4 px-5 py-4 md:flex-row md:justify-between md:px-8 md:py-6 lg:px-16"
+  >
+    <p class="text-label-sm uppercase text-muted">
+      © 2024 TERMINAL_VELOCITY // ALL_SYSTEMS_GO
+    </p>
+    <ul class="flex flex-wrap justify-center gap-4">
+      {
+        social.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              class="text-label-sm uppercase text-muted transition-colors hover:text-primary"
+            >
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

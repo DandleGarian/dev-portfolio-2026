@@ -1,0 +1,51 @@
+---
+// Decorative operator-profile portrait in the technical "diagnostic" frame.
+// Sizing/visibility come from the parent via `class`. `withLabels` adds the
+// ID / status overlays (used on the larger card, omitted on the thumbnail).
+interface Props {
+  class?: string;
+  withLabels?: boolean;
+}
+
+const { class: className = "", withLabels = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative aspect-3/4 overflow-hidden border border-border bg-surface",
+    className,
+  ]}
+>
+  <!-- TODO: drop the real photo at public/operator-profile.png -->
+  <img
+    src="/operator-profile.png"
+    alt="Operator profile"
+    width="600"
+    height="800"
+    class="h-full w-full object-cover brightness-75 contrast-125 grayscale"
+  />
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 border border-primary/20"
+  >
+  </div>
+  <div aria-hidden="true" class="absolute left-0 top-1/2 h-px w-full bg-primary/10"></div>
+  <div aria-hidden="true" class="absolute left-1/2 top-0 h-full w-px bg-primary/10"></div>
+
+  {
+    withLabels && (
+      <Fragment>
+        <div aria-hidden="true" class="absolute left-2 top-2 z-20 flex flex-col gap-1">
+          <span class="bg-surface/80 px-1 text-[10px] text-primary">ID: TV_RE-001</span>
+          <span class="bg-surface/80 px-1 text-[10px] text-muted">
+            OP_TYPE: REDUCTIONIST
+          </span>
+        </div>
+        <div aria-hidden="true" class="absolute bottom-2 right-2 z-20 flex flex-col text-right">
+          <span class="bg-surface/80 px-1 text-[10px] text-muted">VERIFIED_PROFILE</span>
+          <span class="bg-surface/80 px-1 text-[10px] text-primary">AUTH_SECURE</span>
+        </div>
+      </Fragment>
+    )
+  }
+</div>

@@ -1,24 +1,102 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ProfileFrame from "../components/ProfileFrame.astro";
+
+const bullets = [
+  { pre: "Forging ", hi: "aerospace-inspired interfaces", post: " that prioritize technical clarity." },
+  { pre: "Delivering ", hi: "precision-engineered web experiences", post: " across global coordinates." },
+  { pre: "Rejecting gradients. Embracing structural lines.", hi: "", post: "" },
+];
 ---
 
-<Layout title="TERMINAL_VELOCITY // INDEX">
-  <main class="mx-auto max-w-content px-3 py-8 md:px-8">
-    <p class="text-label-md uppercase text-primary">01 // INDEX</p>
-    <h1 class="mt-2 text-headline-xl-mobile md:text-headline-xl">
-      SYSTEM_BOOT: HELLO_WORLD
-    </h1>
-    <p class="mt-4 max-w-prose text-body-lg text-muted">
-      Scaffold online. Design tokens wired into Tailwind v4. Static UI to follow.
-    </p>
+<Layout title="TERMINAL_VELOCITY // INDEX" active="index">
+  <main class="flex flex-grow items-center justify-center pt-18 lg:pt-25">
+    <div
+      class="mx-auto w-full max-w-content px-5 py-10 md:px-8 md:py-16 lg:px-16 lg:py-30"
+    >
+      <!--
+        Three deliberately distinct layouts:
+          < 768px  → stacked (content first, image card below)
+          768–1024 → thumbnail inlined with the headline (no separate card)
+          > 1024px → two-column (content left, image card right)
+      -->
+      <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
+        <!-- Content column -->
+        <div class="flex flex-col gap-8 lg:flex-1">
+          <!-- Top band: tablet-only thumbnail + status/headline -->
+          <div class="flex items-start gap-4 md:gap-6">
+            <ProfileFrame class="hidden w-24 shrink-0 md:block lg:hidden" />
 
-    <!-- token sanity check (remove once real UI lands) -->
-    <div class="mt-8 flex flex-wrap gap-2 border border-border p-4">
-      <span class="border border-border-active px-3 py-1 text-label-sm uppercase text-primary"
-        >primary</span
-      >
-      <span class="bg-primary px-3 py-1 text-label-sm uppercase text-on-primary">fill</span>
-      <span class="bg-surface px-3 py-1 text-label-sm uppercase text-foreground">surface</span>
+            <div class="flex flex-col gap-3">
+              <div
+                class="inline-flex w-fit items-center gap-2 border border-border bg-surface px-3 py-1"
+              >
+                <span class="h-2 w-2 bg-primary"></span>
+                <span class="text-label-sm uppercase tracking-widest text-primary">
+                  STATUS: ONLINE // SECURE
+                </span>
+              </div>
+              <h1
+                class="blink-cursor text-headline-xl-mobile tracking-tighter text-foreground md:text-headline-xl"
+              >
+                SYSTEM_BOOT:<br />HELLO_WORLD
+              </h1>
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <div class="max-w-2xl space-y-6">
+            <p class="text-body-lg text-muted">
+              Executing bio sequence... High-fidelity reductionist engineer
+              detected. Specializing in the architecture of infinite canvases
+              and void spaces.
+            </p>
+            <div class="border-l border-border pl-4">
+              <ul class="space-y-2">
+                {
+                  bullets.map((b) => (
+                    <li class="flex items-start gap-3 text-label-md text-foreground">
+                      <span class="mt-1.5 h-1 w-1 shrink-0 bg-primary" />
+                      <span>
+                        {b.pre}
+                        {b.hi && <span class="text-primary">{b.hi}</span>}
+                        {b.post}
+                      </span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <a
+              href="/work"
+              class="group flex items-center justify-center gap-2 border border-primary px-8 py-4 text-label-md uppercase tracking-widest text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary"
+            >
+              <span>VIEW_WORK</span>
+              <span
+                aria-hidden="true"
+                class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1"
+                >arrow_forward</span
+              >
+            </a>
+            <button
+              type="button"
+              class="border border-border bg-surface px-8 py-4 text-label-md uppercase tracking-widest text-foreground transition-colors duration-200 hover:bg-foreground hover:text-background"
+            >
+              READ_LOGS
+            </button>
+          </div>
+        </div>
+
+        <!-- Full card: below content on mobile, right column on desktop, hidden in the tablet band -->
+        <ProfileFrame
+          withLabels
+          class="mx-auto block w-full max-w-sm md:hidden lg:mx-0 lg:block lg:w-80 lg:shrink-0"
+        />
+      </div>
     </div>
   </main>
 </Layout>
