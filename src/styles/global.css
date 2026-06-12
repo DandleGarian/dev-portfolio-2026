@@ -120,6 +120,11 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Tailwind v4 dropped the default button pointer — restore it for enabled buttons. */
+button:not(:disabled) {
+  cursor: pointer;
+}
+
 /* ---- Brand-identity effects (CSS-only) ---- */
 
 /* Technical blueprint grid behind all content */

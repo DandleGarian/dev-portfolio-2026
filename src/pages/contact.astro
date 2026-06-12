@@ -1,0 +1,205 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="TERMINAL_VELOCITY // DATA_TRANSMISSION" active="contact">
+  <main
+    class="mx-auto w-full max-w-content grow px-5 pb-24 pt-28 md:px-8 lg:px-16 lg:pt-32"
+  >
+    <div class="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-16">
+      <!-- Left: header + readout -->
+      <div class="w-full lg:sticky lg:top-28 lg:w-1/2">
+        <h1
+          class="mb-6 text-headline-xl-mobile uppercase text-foreground md:text-headline-xl"
+        >
+          <span class="text-primary">04 //</span> DATA_TRANSMISSION
+        </h1>
+        <div class="max-w-md space-y-4 text-body-md text-muted">
+          <p>
+            Secure uplink established. Enter required parameters to initialize
+            direct communication protocols.
+          </p>
+          <div class="mt-8 border-t border-border pt-4">
+            <div class="flex items-center justify-between py-2 text-label-md">
+              <span>STATUS:</span>
+              <span id="form-status" class="blink-cursor text-primary"
+                >AWAITING_INPUT</span
+              >
+            </div>
+            <div class="flex items-center justify-between py-2 text-label-md">
+              <span>ENCRYPTION:</span>
+              <span class="text-foreground">STANDARD_PROTOCOL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form terminal -->
+      <div class="w-full lg:w-1/2">
+        <form
+          id="contact-form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="group relative border border-border bg-background p-6 md:p-8"
+        >
+          <!-- corner accents -->
+          <div aria-hidden="true" class="absolute left-0 top-0 h-4 w-4 border-l border-t border-border transition-colors duration-300 group-hover:border-primary"></div>
+          <div aria-hidden="true" class="absolute right-0 top-0 h-4 w-4 border-r border-t border-border transition-colors duration-300 group-hover:border-primary"></div>
+          <div aria-hidden="true" class="absolute bottom-0 left-0 h-4 w-4 border-b border-l border-border transition-colors duration-300 group-hover:border-primary"></div>
+          <div aria-hidden="true" class="absolute bottom-0 right-0 h-4 w-4 border-b border-r border-border transition-colors duration-300 group-hover:border-primary"></div>
+
+          <!-- Netlify plumbing -->
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden">
+            <label
+              >Leave this field empty:
+              <input name="bot-field" tabindex="-1" autocomplete="off" /></label
+            >
+          </p>
+
+          <div class="space-y-8">
+            <!-- SOURCE_ID -->
+            <div class="flex flex-col gap-2">
+              <label
+                for="source_id"
+                class="flex items-center gap-2 text-label-md uppercase text-foreground"
+              >
+                <span aria-hidden="true" class="text-primary">&gt;</span> SOURCE_ID
+                [REQ]
+              </label>
+              <input
+                id="source_id"
+                name="source_id"
+                type="email"
+                required
+                placeholder="user@domain.net"
+                class="w-full border border-border bg-transparent p-4 text-body-md text-foreground transition-colors placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary"
+              />
+            </div>
+
+            <!-- SUBJECT_CODE -->
+            <div class="flex flex-col gap-2">
+              <label
+                for="subject_code"
+                class="flex items-center gap-2 text-label-md uppercase text-foreground"
+              >
+                <span aria-hidden="true" class="text-primary">&gt;</span> SUBJECT_CODE
+              </label>
+              <input
+                id="subject_code"
+                name="subject_code"
+                type="text"
+                placeholder="INQUIRY_TYPE"
+                class="w-full border border-border bg-transparent p-4 text-body-md text-foreground transition-colors placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary"
+              />
+            </div>
+
+            <!-- MESSAGE_PAYLOAD -->
+            <div class="flex flex-col gap-2">
+              <label
+                for="message_payload"
+                class="flex items-center gap-2 text-label-md uppercase text-foreground"
+              >
+                <span aria-hidden="true" class="text-primary">&gt;</span> MESSAGE_PAYLOAD
+                [REQ]
+              </label>
+              <textarea
+                id="message_payload"
+                name="message_payload"
+                required
+                rows="6"
+                placeholder="Enter transmission data..."
+                class="w-full resize-y border border-border bg-transparent p-4 text-body-md text-foreground transition-colors placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary"
+              ></textarea>
+            </div>
+
+            <!-- Submit + status -->
+            <div
+              class="flex flex-col gap-4 pt-4 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <p
+                id="form-message"
+                role="status"
+                aria-live="polite"
+                class="text-label-sm text-muted"
+              >
+              </p>
+              <button
+                id="form-submit"
+                type="submit"
+                class="flex shrink-0 items-center justify-center gap-2 border border-primary bg-transparent px-8 py-4 text-label-md uppercase text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <span id="form-submit-label">INITIATE_UPLINK</span>
+                <span aria-hidden="true" class="material-symbols-outlined text-[18px]"
+                  >send</span
+                >
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const submit = document.getElementById("form-submit") as HTMLButtonElement | null;
+  const submitLabel = document.getElementById("form-submit-label");
+  const message = document.getElementById("form-message");
+  const status = document.getElementById("form-status");
+
+  function setStatus(text: string, blink: boolean) {
+    if (!status) return;
+    status.textContent = text;
+    status.classList.toggle("blink-cursor", blink);
+  }
+
+  // Literal class strings so Tailwind generates them (no dynamic interpolation).
+  const TONES = {
+    muted: "text-label-sm text-muted",
+    primary: "text-label-sm text-primary",
+    error: "text-label-sm text-error",
+  } as const;
+
+  function setMessage(text: string, tone: keyof typeof TONES) {
+    if (!message) return;
+    message.textContent = text;
+    message.className = TONES[tone];
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!submit || !submitLabel) return;
+
+    submit.disabled = true;
+    submitLabel.textContent = "TRANSMITTING";
+    setStatus("TRANSMITTING", true);
+    setMessage("", "muted");
+
+    try {
+      const params = new URLSearchParams();
+      new FormData(form).forEach((value, key) =>
+        params.append(key, String(value)),
+      );
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString(),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      form.reset();
+      setStatus("TRANSMISSION_COMPLETE", false);
+      setMessage("// UPLINK CONFIRMED — message received.", "primary");
+    } catch {
+      setStatus("TRANSMISSION_FAILED", false);
+      setMessage("// ERROR — transmission failed. Please retry.", "error");
+    } finally {
+      submit.disabled = false;
+      submitLabel.textContent = "INITIATE_UPLINK";
+    }
+  });
+</script>
