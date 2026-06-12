@@ -1,0 +1,97 @@
+---
+// Work-archive project card. Two variants:
+//   default  → badge + name + divider + spec list
+//   feature  → full-width (md:col-span-2), adds a description, specs right-aligned on desktop
+interface Props {
+  id: string;
+  name: string;
+  specs: string[];
+  description?: string;
+  feature?: boolean;
+  href?: string;
+}
+
+const { id, name, specs, description, feature = false, href = "#" } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "group relative block overflow-hidden border border-border bg-surface transition-colors duration-300 hover:border-primary",
+    feature && "md:col-span-2",
+  ]}
+>
+  <!-- subtle orange wash on hover -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-[0.03]"
+  >
+  </div>
+
+  {
+    feature ? (
+      <div class="flex h-full flex-col p-8 md:flex-row md:justify-between md:gap-8">
+        <div class="flex flex-col md:w-1/2">
+          <div class="mb-12 flex items-start justify-between">
+            <span class="border border-border px-2 py-1 text-label-sm text-primary">
+              {id}
+            </span>
+            <span
+              aria-hidden="true"
+              class="material-symbols-outlined text-muted transition-colors duration-300 group-hover:text-primary"
+            >
+              arrow_outward
+            </span>
+          </div>
+          <div class="mt-auto">
+            <h2 class="mb-2 wrap-break-word text-headline-md text-foreground transition-colors duration-300 group-hover:text-primary">
+              {name}
+            </h2>
+            {description && (
+              <p class="hidden max-w-md text-body-md text-muted md:block">{description}</p>
+            )}
+          </div>
+        </div>
+        <div class="mt-8 flex flex-col md:mt-0 md:w-1/2 md:items-end md:justify-end">
+          <div class="my-4 h-px w-full bg-border transition-colors duration-300 group-hover:bg-primary/30 md:hidden" />
+          <ul class="space-y-2 text-label-sm text-muted md:text-right">
+            {specs.map((s) => (
+              <li class="flex items-center gap-2 md:justify-end">
+                <span aria-hidden="true" class="h-1 w-1 shrink-0 bg-primary md:order-last" />
+                <span>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ) : (
+      <div class="flex h-full flex-col p-8">
+        <div class="mb-12 flex items-start justify-between">
+          <span class="border border-border px-2 py-1 text-label-sm text-primary">
+            {id}
+          </span>
+          <span
+            aria-hidden="true"
+            class="material-symbols-outlined text-muted transition-colors duration-300 group-hover:text-primary"
+          >
+            arrow_outward
+          </span>
+        </div>
+        <div class="mt-auto">
+          <h2 class="mb-2 wrap-break-word text-headline-md text-foreground transition-colors duration-300 group-hover:text-primary">
+            {name}
+          </h2>
+          <div class="my-4 h-px w-full bg-border transition-colors duration-300 group-hover:bg-primary/30" />
+          <ul class="space-y-2 text-label-sm text-muted">
+            {specs.map((s) => (
+              <li class="flex items-center gap-2">
+                <span aria-hidden="true" class="h-1 w-1 shrink-0 bg-primary" />
+                <span>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+</a>
