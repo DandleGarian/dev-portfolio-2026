@@ -1,0 +1,169 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Placeholder content — copy to be finalised later.
+const hardwareStats = [
+  { label: "Core_Processor", value: "Caffeine-Fueled Synaptic Engine v2.4" },
+  { label: "Hard_Drive", value: "100% Motivated (Frequent Defragmentation Req.)" },
+  { label: "Humor_Core", value: "ENABLED [Warning: Dry]", highlight: true },
+  { label: "Sleep_Mode", value: "Erratic / Often Overridden" },
+];
+
+const timeline = [
+  {
+    version: "v3.0 // CURRENT_BUILD",
+    title: "Senior Architecture Phase",
+    desc: "Optimized logic flows. Reduced redundant anxiety loops by 40%. Implemented advanced structural frameworks.",
+    active: true,
+  },
+  {
+    version: "v2.0 // MID_LEVEL_EXPANSION",
+    title: "Full-Stack Integration",
+    desc: "Expanded database connections. UI layer refined. Encountered first major memory leaks (resolved via coffee injection).",
+  },
+  {
+    version: "v1.0 // INITIAL_BOOT",
+    title: "Hello World",
+    desc: "Basic syntax acquired. Frequent segmentation faults. High enthusiasm, low efficiency.",
+  },
+];
+---
+
+<Layout title="TERMINAL_VELOCITY // UNIT_SPECIFICATIONS" active="specs">
+  <main
+    class="mx-auto w-full max-w-content grow px-5 pb-24 pt-24 md:px-8 md:pt-28 lg:px-16"
+  >
+    <!-- Section header -->
+    <div class="mb-16 lg:mb-24">
+      <div class="mb-6 inline-block border border-border px-4 py-2">
+        <span class="text-label-md uppercase tracking-widest text-foreground">
+          DIAGNOSTIC_REPORT // ID: 8847-A
+        </span>
+      </div>
+      <h1
+        class="blink-cursor text-headline-xl-mobile text-foreground md:text-headline-xl"
+      >
+        03 // UNIT_SPECIFICATIONS
+      </h1>
+    </div>
+
+    <!-- Bento grid (panels go side-by-side at md; timeline stays mobile layout until lg) -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-12">
+      <!-- HARDWARE_STATS -->
+      <div
+        class="group relative overflow-hidden border border-border bg-surface p-8 transition-colors duration-300 hover:border-primary md:col-span-7"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute right-0 top-0 p-4 opacity-20 transition-opacity duration-300 group-hover:opacity-100"
+        >
+          <span class="material-symbols-outlined text-primary" style="font-size: 48px;"
+            >memory</span
+          >
+        </div>
+        <h2
+          class="mb-8 inline-block border-b border-border pb-2 text-headline-md text-foreground"
+        >
+          HARDWARE_STATS
+        </h2>
+        <ul class="space-y-6">
+          {
+            hardwareStats.map((s) => (
+              <li class="flex flex-col border-b border-border pb-4 lg:flex-row lg:justify-between lg:gap-4">
+                <span class="text-label-md uppercase text-muted">{s.label}</span>
+                <span
+                  class:list={[
+                    "text-body-md lg:text-right",
+                    s.highlight
+                      ? "flex items-center gap-2 text-primary"
+                      : "text-foreground",
+                  ]}
+                >
+                  {s.highlight && (
+                    <span aria-hidden="true" class="h-2 w-2 shrink-0 bg-primary" />
+                  )}
+                  {s.value}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- OPERATOR_IDENTIFICATION -->
+      <div
+        class="flex h-full min-h-75 flex-col justify-between border border-border bg-surface p-8 md:col-span-5"
+      >
+        <h3 class="mb-4 text-label-md uppercase text-foreground">
+          OPERATOR_IDENTIFICATION // SCAN_ACTIVE
+        </h3>
+        <div class="flex grow items-center justify-center p-4">
+          <div class="relative w-full max-w-60">
+            <!-- outer reticle -->
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute -inset-2 border-2 border-primary/30"
+            >
+            </div>
+            <div class="relative overflow-hidden border border-primary bg-surface p-1">
+              <img
+                src="/operator-profile.png"
+                alt="Operator identity scan"
+                width="600"
+                height="800"
+                class="h-auto w-full grayscale contrast-125 brightness-90"
+              />
+              <!-- corner brackets -->
+              <div aria-hidden="true" class="absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary"></div>
+              <div aria-hidden="true" class="absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary"></div>
+              <div aria-hidden="true" class="absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-primary"></div>
+              <div aria-hidden="true" class="absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-primary"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 text-right">
+          <span class="text-label-sm text-muted">BIO_METRIC_SCAN // REF: ALPHA_ONE</span>
+        </div>
+      </div>
+
+      <!-- SYSTEM_HISTORY timeline -->
+      <div class="border border-border bg-surface p-8 md:col-span-12">
+        <h2
+          class="mb-8 inline-block border-b border-border pb-2 text-headline-md text-foreground"
+        >
+          SYSTEM_HISTORY
+        </h2>
+        <div
+          class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:-translate-x-px before:bg-border before:content-[''] lg:before:mx-auto lg:before:translate-x-0"
+        >
+          {
+            timeline.map((e) => (
+              <div class="group relative flex items-center justify-between lg:justify-normal lg:odd:flex-row-reverse">
+                <div
+                  class:list={[
+                    "z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-background lg:order-1 lg:group-odd:-translate-x-1/2 lg:group-even:translate-x-1/2",
+                    e.active ? "border-primary text-primary" : "border-border text-muted",
+                  ]}
+                >
+                  <div class:list={["h-3 w-3", e.active ? "bg-primary" : "bg-border"]} />
+                </div>
+                <div class="w-[calc(100%-4rem)] border border-border p-4 transition-colors group-hover:border-primary lg:w-[calc(50%-2.5rem)]">
+                  <span
+                    class:list={[
+                      "mb-2 block text-label-sm",
+                      e.active ? "text-primary" : "text-muted",
+                    ]}
+                  >
+                    {e.version}
+                  </span>
+                  <h4 class="mb-1 text-body-lg text-foreground">{e.title}</h4>
+                  <p class="text-body-md text-muted">{e.desc}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
