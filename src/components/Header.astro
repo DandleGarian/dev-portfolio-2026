@@ -111,6 +111,12 @@ const links: { id: PageId; label: string; href: string }[] = [
     setOpen(toggle.getAttribute("aria-expanded") !== "true");
   });
 
+  // Collapse the mobile menu when a link inside it is chosen (e.g. one that
+  // opens the drawer) so it isn't left open behind the panel.
+  menu?.addEventListener("click", (event) => {
+    if ((event.target as Element)?.closest?.("a")) setOpen(false);
+  });
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
       setOpen(false);
