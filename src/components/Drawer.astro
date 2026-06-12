@@ -1,0 +1,150 @@
+---
+// Navigation drawer — rendered only on the index (the persistent "home base").
+// Drawer-able routes (/work, /specs, /contact) open here as an overlay panel
+// (bottom sheet on mobile/tablet, right-side panel on desktop) instead of a
+// full page navigation. Real routes remain the no-JS / deep-link floor.
+const navLinks = [
+  { id: "index", label: "01 // INDEX", href: "/" },
+  { id: "work", label: "02 // WORK", href: "/work" },
+  { id: "specs", label: "03 // SPECS", href: "/specs" },
+  { id: "contact", label: "04 // SEND", href: "/contact" },
+];
+---
+
+<dialog id="drawer" class="drawer" aria-label="Content panel">
+  <div
+    class="flex shrink-0 items-center justify-between gap-4 border-b border-border bg-background/80 px-5 py-4 backdrop-blur-md md:px-8 lg:px-16"
+  >
+    <a href="/" class="text-headline-md font-bold tracking-tighter text-foreground">
+      TERMINAL_VELOCITY
+    </a>
+
+    <nav class="hidden items-center gap-6 text-label-md md:flex">
+      {
+        navLinks
+          .filter((l) => l.id !== "index")
+          .map((l) => (
+            <a
+              href={l.href}
+              data-drawer-link={l.id}
+              class="pb-1 uppercase text-muted transition-colors hover:text-foreground"
+            >
+              {l.label}
+            </a>
+          ))
+      }
+    </nav>
+
+    <button
+      id="drawer-close"
+      type="button"
+      aria-label="Close panel"
+      class="flex items-center gap-2 p-2 text-label-md uppercase text-foreground transition-colors hover:text-primary"
+    >
+      <span class="hidden sm:inline">CLOSE</span>
+      <span aria-hidden="true" class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+
+  <div id="drawer-content" class="grow overflow-y-auto" tabindex="-1"></div>
+</dialog>
+
+<script>
+  const drawer = document.getElementById("drawer") as HTMLDialogElement | null;
+  const content = document.getElementById("drawer-content");
+  const closeBtn = document.getElementById("drawer-close");
+
+  if (drawer && content) {
+    const ROUTES = ["/work", "/specs", "/contact"];
+    const norm = (p: string) => (p !== "/" ? p.replace(/\/$/, "") : "/");
+    const isRoute = (p: string) => ROUTES.includes(norm(p));
+
+    function updateActive(pathname: string) {
+      const path = norm(pathname);
+      drawer!.querySelectorAll<HTMLAnchorElement>("[data-drawer-link]").forEach((a) => {
+        const on = norm(new URL(a.href).pathname) === path;
+        a.classList.toggle("text-primary", on);
+        a.classList.toggle("border-b", on);
+        a.classList.toggle("border-primary", on);
+        a.classList.toggle("text-muted", !on);
+      });
+    }
+
+    async function loadInto(pathname: string) {
+      const res = await fetch(pathname, { headers: { "X-Requested-With": "drawer" } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+      const main = doc.querySelector("main");
+      if (main) content!.replaceChildren(main);
+      if (doc.title) document.title = doc.title;
+      content!.scrollTop = 0;
+      updateActive(pathname);
+    }
+
+    async function openRoute(pathname: string, newEntry: boolean) {
+      try {
+        await loadInto(pathname);
+      } catch {
+        window.location.href = pathname; // graceful fallback to a real navigation
+        return;
+      }
+      const state = { drawer: true };
+      if (newEntry) history.pushState(state, "", pathname);
+      else history.replaceState(state, "", pathname);
+      if (!drawer!.open) {
+        document.body.style.overflow = "hidden";
+        drawer!.showModal();
+      }
+    }
+
+    // Intercept clicks on internal drawer-route links (header, hero CTAs, drawer nav).
+    document.addEventListener("click", (event) => {
+      const anchor = (event.target as Element)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!anchor || anchor.target === "_blank") return;
+      const url = new URL(anchor.href, window.location.origin);
+      if (url.origin !== window.location.origin) return;
+      const path = norm(url.pathname);
+
+      if (isRoute(path)) {
+        event.preventDefault();
+        openRoute(url.pathname, !drawer!.open);
+      } else if (path === "/" && drawer!.open) {
+        event.preventDefault();
+        history.back(); // index link while open → close
+      }
+    });
+
+    // All close paths funnel through history.back() → popstate closes the panel.
+    closeBtn?.addEventListener("click", () => history.back());
+    drawer.addEventListener("cancel", (event) => {
+      event.preventDefault(); // intercept native ESC
+      history.back();
+    });
+    drawer.addEventListener("click", (event) => {
+      if (event.target === drawer) history.back(); // backdrop / sliver click
+    });
+    drawer.addEventListener("close", () => {
+      document.body.style.overflow = "";
+    });
+
+    window.addEventListener("popstate", () => {
+      const path = norm(window.location.pathname);
+      if (isRoute(path)) {
+        loadInto(window.location.pathname).then(() => {
+          if (!drawer.open) {
+            document.body.style.overflow = "hidden";
+            drawer.showModal();
+          }
+        });
+      } else if (drawer.open) {
+        drawer.close();
+      }
+    });
+
+    // Deep-load support: if the index is loaded at a drawer URL (back/forward
+    // restore), open the panel to match.
+    if (isRoute(window.location.pathname)) {
+      openRoute(window.location.pathname, false);
+    }
+  }
+</script>

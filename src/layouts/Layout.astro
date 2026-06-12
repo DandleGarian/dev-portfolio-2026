@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Drawer from "../components/Drawer.astro";
 
 type PageId = "index" | "work" | "specs" | "contact";
 
@@ -47,5 +48,66 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <Header active={active} />
     <slot />
     <Footer />
+    {active === "index" && <Drawer />}
+
+    <script>
+      // Contact form — submitted via Netlify Forms over fetch (no page reload).
+      // Document-delegated so it works on the standalone /contact page AND when
+      // the form is injected into the navigation drawer.
+      const TONES = {
+        muted: "text-label-sm text-muted",
+        primary: "text-label-sm text-primary",
+        error: "text-label-sm text-error",
+      } as const;
+
+      document.addEventListener("submit", async (event) => {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement) || form.id !== "contact-form") return;
+        event.preventDefault();
+
+        const submit = form.querySelector<HTMLButtonElement>("#form-submit");
+        const submitLabel = document.getElementById("form-submit-label");
+        const message = document.getElementById("form-message");
+        const status = document.getElementById("form-status");
+        if (!submit || !submitLabel) return;
+
+        const setStatus = (text: string, blink: boolean) => {
+          if (!status) return;
+          status.textContent = text;
+          status.classList.toggle("blink-cursor", blink);
+        };
+        const setMessage = (text: string, tone: keyof typeof TONES) => {
+          if (!message) return;
+          message.textContent = text;
+          message.className = TONES[tone];
+        };
+
+        submit.disabled = true;
+        submitLabel.textContent = "TRANSMITTING";
+        setStatus("TRANSMITTING", true);
+        setMessage("", "muted");
+
+        try {
+          const params = new URLSearchParams();
+          new FormData(form).forEach((value, key) => params.append(key, String(value)));
+          const response = await fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: params.toString(),
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          form.reset();
+          setStatus("TRANSMISSION_COMPLETE", false);
+          setMessage("// UPLINK CONFIRMED — message received.", "primary");
+        } catch {
+          setStatus("TRANSMISSION_FAILED", false);
+          setMessage("// ERROR — transmission failed. Please retry.", "error");
+        } finally {
+          submit.disabled = false;
+          submitLabel.textContent = "INITIATE_UPLINK";
+        }
+      });
+    </script>
   </body>
 </html>
