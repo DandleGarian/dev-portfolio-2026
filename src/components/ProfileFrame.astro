@@ -2,6 +2,9 @@
 // Decorative operator-profile portrait in the technical "diagnostic" frame.
 // Sizing/visibility come from the parent via `class`. `withLabels` adds the
 // ID / status overlays (used on the larger card, omitted on the thumbnail).
+import { Image } from "astro:assets";
+import operatorProfile from "../assets/operator-profile.png";
+
 interface Props {
   class?: string;
   withLabels?: boolean;
@@ -16,12 +19,12 @@ const { class: className = "", withLabels = false } = Astro.props;
     className,
   ]}
 >
-  <!-- TODO: drop the real photo at public/operator-profile.png -->
-  <img
-    src="/operator-profile.png"
+  <Image
+    src={operatorProfile}
     alt="Operator profile"
-    width="600"
-    height="800"
+    width={512}
+    height={768}
+    format="webp"
     class="h-full w-full object-cover brightness-75 contrast-125 grayscale"
   />
   <div
