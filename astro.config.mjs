@@ -9,5 +9,5 @@ import { defineConfig } from "astro/config";
 // @tailwindcss/vite plugin, which is currently incompatible with Astro 6's
 // rolldown-vite. Revisit the Vite plugin once that's fixed upstream.
 export default defineConfig({
-  // site: "https://terminal-velocity.netlify.app",
+  site: "https://dandulgerian.com",
 });
