@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TERMINAL_VELOCITY // WORK ARCHIVE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "tertiary-container": "#989999",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#313030",
+                        "on-primary-fixed": "#351000",
+                        "primary": "#ffb693",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary-container": "#4a4949",
+                        "outline-variant": "#5a4136",
+                        "primary-fixed": "#ffdbcc",
+                        "on-tertiary": "#2f3131",
+                        "secondary": "#c9c6c5",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-primary-container": "#572000",
+                        "on-tertiary-container": "#2f3132",
+                        "surface-tint": "#ffb693",
+                        "on-surface": "#e5e2e1",
+                        "background": "#131313",
+                        "on-secondary-container": "#bab8b7",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#e2bfb0",
+                        "surface-container": "#20201f",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary": "#561f00",
+                        "surface-variant": "#353535",
+                        "primary-fixed-dim": "#ffb693",
+                        "surface-container-highest": "#353535",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed": "#e5e2e1",
+                        "tertiary": "#c6c6c7",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1b1b",
+                        "inverse-primary": "#a04100",
+                        "inverse-on-surface": "#313030",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#393939",
+                        "primary-container": "#ff6b00",
+                        "surface": "#131313",
+                        "outline": "#a98a7d",
+                        "on-secondary-fixed-variant": "#474646"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "section-gap": "120px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "headline-xl-mobile": ["JetBrains Mono"],
+                        "headline-md": ["JetBrains Mono"],
+                        "body-lg": ["JetBrains Mono"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-xl-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "0", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-surface'); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md bg-background text-on-surface dark">
+<!-- TopNavBar (Shared Component) - Mobile Version -->
+<nav class="bg-background/80 backdrop-blur-md full-width top-0 border-b border-surface-variant fixed left-0 w-full z-50 flex flex-col justify-between items-start px-margin-mobile py-4 transition-all duration-200 ease-in-out">
+<div class="flex w-full justify-between items-center pb-4 border-b border-surface-variant mb-4">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface uppercase">TERMINAL_VELOCITY</div>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+<div class="flex flex-col w-full gap-4">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md hover:bg-surface-container-highest/10 w-full p-2" href="#">01 // INDEX</a>
+<a class="text-primary-container border-b border-primary-container pb-1 font-label-md text-label-md hover:bg-surface-container-highest/10 w-full p-2" href="#">02 // WORK</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md hover:bg-surface-container-highest/10 w-full p-2" href="#">03 // SPECS</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md hover:bg-surface-container-highest/10 w-full p-2" href="#">04 // SEND</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[200px] px-margin-mobile pb-section-gap flex flex-col items-center">
+<!-- Header -->
+<header class="w-full max-w-container-max mb-[80px]">
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile uppercase text-on-surface mb-unit-8">ARCHIVE_</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[80%]">Complete index of logged missions and deployed systems. Sorted by temporal proximity.</p>
+</header>
+<!-- Project List Stack -->
+<div class="w-full max-w-container-max flex flex-col gap-[40px]">
+<!-- Card 1 -->
+<article class="border border-surface-variant bg-surface-container flex flex-col transition-colors hover:border-primary-container group">
+<div class="p-[24px] flex flex-col gap-unit-8 border-b border-surface-variant">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-sm text-label-sm text-primary-container uppercase border border-primary-container px-2 py-1">SYS.098</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DEployed</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-2">ORBITAL_SYNC</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Real-time telemetry visualization platform for low earth orbit satellite constellations. High data throughput with sub-millisecond latency.</p>
+<div class="flex flex-col gap-4 mb-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">ROLE</span>
+<span class="font-body-md text-body-md text-on-surface">LEAD_ENGINEER</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">STACK</span>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">RUST</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">WASM</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">WEBGL</span>
+</div>
+</div>
+</div>
+</div>
+<a class="p-[16px] flex justify-between items-center text-on-surface-variant group-hover:text-primary-container group-hover:bg-primary-container/10 transition-colors" href="#">
+<span class="font-label-md text-label-md uppercase">ACCESS_LOGS</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</article>
+<!-- Card 2 -->
+<article class="border border-surface-variant bg-surface-container flex flex-col transition-colors hover:border-primary-container group">
+<div class="p-[24px] flex flex-col gap-unit-8 border-b border-surface-variant">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-sm text-label-sm text-primary-container uppercase border border-primary-container px-2 py-1">SYS.074</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ARCHived</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-2">NEURAL_MESH</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Distributed intelligence framework for autonomous drone swarms. Developed dynamic routing protocols based on localized sensor input.</p>
+<div class="flex flex-col gap-4 mb-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">ROLE</span>
+<span class="font-body-md text-body-md text-on-surface">SYSTEMS_ARCHITECT</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">STACK</span>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">C++</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">PYTHON</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">TENSORFLOW</span>
+</div>
+</div>
+</div>
+</div>
+<a class="p-[16px] flex justify-between items-center text-on-surface-variant group-hover:text-primary-container group-hover:bg-primary-container/10 transition-colors" href="#">
+<span class="font-label-md text-label-md uppercase">ACCESS_LOGS</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</article>
+<!-- Card 3 -->
+<article class="border border-surface-variant bg-surface-container flex flex-col transition-colors hover:border-primary-container group">
+<div class="p-[24px] flex flex-col gap-unit-8 border-b border-surface-variant">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-sm text-label-sm text-primary-container uppercase border border-primary-container px-2 py-1">SYS.062</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DEployed</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface mb-2">VOID_INTERFACE</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Minimalist terminal-based UI library. Engineered for maximum legibility in low-light aerospace environments.</p>
+<div class="flex flex-col gap-4 mb-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">ROLE</span>
+<span class="font-body-md text-body-md text-on-surface">UI_ENGINEER</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">STACK</span>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">TYPESCRIPT</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">REACT</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase border border-surface-variant px-2 py-1">TAILWIND</span>
+</div>
+</div>
+</div>
+</div>
+<a class="p-[16px] flex justify-between items-center text-on-surface-variant group-hover:text-primary-container group-hover:bg-primary-container/10 transition-colors" href="#">
+<span class="font-label-md text-label-md uppercase">ACCESS_LOGS</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</article>
+</div>
+</main>
+<!-- Footer (Shared Component) - Mobile Version -->
+<footer class="bg-surface-container-lowest full-width bottom-0 w-full py-[32px] px-margin-mobile flex flex-col justify-center items-center border-t border-surface-variant gap-4">
+<div class="font-label-md text-label-md text-primary-container uppercase text-center mb-4">TERMINAL_VELOCITY</div>
+<div class="flex flex-wrap justify-center gap-4 mb-4">
+<a class="font-label-sm text-label-sm text-on-tertiary-fixed-variant hover:text-on-surface transition-colors uppercase" href="#">GITHUB</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-fixed-variant hover:text-on-surface transition-colors uppercase" href="#">LINKEDIN</a>
+<a class="font-label-sm text-label-sm text-on-tertiary-fixed-variant hover:text-on-surface transition-colors uppercase" href="#">SOURCE_CODE</a>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase">©2024 TERMINAL_VELOCITY // ALL_SYSTEMS_GO</div>
+</footer>
+<div aria-modal="true" class="fixed inset-0 z-[100] flex items-center justify-center p-margin-mobile bg-background/80 backdrop-blur-md" id="project-modal" role="dialog">
+<div class="relative w-full max-w-container-max bg-surface-container border border-surface-variant flex flex-col overflow-hidden">
+<!-- Modal Header -->
+<div class="flex justify-between items-center p-4 border-b border-surface-variant bg-surface-container-high">
+<span class="font-label-md text-label-md text-primary-container uppercase">SYS.098 // DETAILS</span>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2" onclick="document.getElementById('project-modal').remove()">
+<span class="font-label-sm text-label-sm uppercase">CLOSE [ESC]</span>
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Content -->
+<div class="relative aspect-[3/4] w-full bg-surface-container-lowest">
+<!-- Placeholder for Project Image -->
+<div class="absolute inset-0 flex items-center justify-center text-surface-variant">
+<span class="material-symbols-outlined text-6xl">deployed_code</span>
+</div>
+<!-- Gradient Overlay & Description -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent flex flex-col justify-end p-6">
+<div class="mb-8">
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase mb-2">ORBITAL_SYNC</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            // SYSTEM_LOG: High-performance telemetry node. 
+            // Optimized for sub-millisecond packet routing. 
+            // Deployed across 42 orbital sectors.
+          </p>
+</div>
+<!-- Carousel Navigation -->
+<div class="flex items-center justify-between">
+<div class="flex gap-2">
+<div class="w-2 h-2 bg-primary-container"></div>
+<div class="w-2 h-2 bg-surface-variant"></div>
+<div class="w-2 h-2 bg-surface-variant"></div>
+</div>
+<div class="flex gap-4">
+<button class="p-2 border border-surface-variant hover:border-primary-container text-on-surface-variant hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 border border-surface-variant hover:border-primary-container text-on-surface-variant hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer (Action) -->
+<div class="p-4 border-t border-surface-variant">
+<button class="w-full py-4 bg-primary-container text-on-primary font-label-md text-label-md uppercase tracking-widest hover:bg-primary transition-colors">
+        INITIALIZE_REMOTE_ACCESS
+      </button>
+</div>
+</div>
+</div></body></html>
