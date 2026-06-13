@@ -4,6 +4,7 @@
 // body is an inert <template>, cloned into the dialog on open; one live carousel
 // at a time keeps the IntersectionObserver simple and future-proofs real images.
 import { projects } from "../data/projects";
+import CarouselSlide from "./CarouselSlide.astro";
 ---
 
 <dialog id="project-modal" class="project-modal" aria-labelledby="pm-title">
@@ -33,35 +34,20 @@ import { projects } from "../data/projects";
     <template id={`pm-${p.id}`}>
       <div class="pm-carousel">
         <ul
-          class="pm-track no-scrollbar flex aspect-video snap-x snap-mandatory overflow-x-auto"
+          class="pm-track no-scrollbar flex aspect-3/4 snap-x snap-mandatory overflow-x-auto lg:aspect-video"
           tabindex="0"
           role="group"
           aria-roledescription="carousel"
           aria-label="Project screens"
         >
           {p.slides.map((slide, i) => (
-            <li
-              class="pm-slide relative w-full flex-none snap-start"
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`Image ${i + 1} of ${p.slides.length}`}
-            >
-              <div class="flex h-full w-full flex-col items-center justify-center gap-3 bg-surface-2 text-muted">
-                <span aria-hidden="true" class="material-symbols-outlined text-[48px]">
-                  deployed_code
-                </span>
-                <span class="text-label-sm uppercase tracking-widest">
-                  SCREEN_0{i + 1}
-                </span>
-              </div>
-              {slide.caption && (
-                <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-background to-transparent p-4">
-                  <span class="text-label-sm uppercase tracking-widest text-foreground">
-                    {slide.caption}
-                  </span>
-                </div>
-              )}
-            </li>
+            <CarouselSlide
+              desktop={slide.desktop}
+              mobile={slide.mobile}
+              caption={slide.caption}
+              index={i}
+              total={p.slides.length}
+            />
           ))}
         </ul>
 

@@ -1,12 +1,23 @@
 // Single source of truth for the Work Archive cards AND the project modal,
 // so the two can never drift. Copy is placeholder pending real content.
 
+import type { ImageMetadata } from "astro";
+
+// TEPE storefront screenshots — desktop + mobile per screen.
+import tepeHpDt from "../assets/projects/tepe/tepe-hp-dt.png";
+import tepeHpMb from "../assets/projects/tepe/tepe-hp-mb.png";
+import tepePdpDt from "../assets/projects/tepe/tepe-pdp-dt.png";
+import tepePdpMb from "../assets/projects/tepe/tepe-pdp-mb.png";
+import tepeCpDt from "../assets/projects/tepe/tepe-cp-dt.png";
+import tepeCpMb from "../assets/projects/tepe/tepe-cp-mb.png";
+
 export interface ProjectSlide {
   /** Optional caption shown over the slide. */
   caption?: string;
-  // Real images land here later — desktop required, mobile optional (art-directed):
-  //   desktop?: import("astro").ImageMetadata;
-  //   mobile?: import("astro").ImageMetadata;
+  /** Desktop image — shown at lg+ (art direction). */
+  desktop?: ImageMetadata;
+  /** Mobile image — shown below lg; falls back to desktop if absent. */
+  mobile?: ImageMetadata;
 }
 
 export interface Project {
@@ -36,10 +47,9 @@ export const projects: Project[] = [
       "Mission-control telemetry dashboard rendering live flight data at 60fps. Engineered for zero-latency situational awareness under sustained load.",
     url: "https://example.com",
     slides: [
-      { caption: "PRIMARY_TELEMETRY_VIEW" },
-      { caption: "ORBITAL_TRACKING_OVERLAY" },
-      {},
-      { caption: "ALERT_SUBSYSTEM" },
+      { caption: "HOME_PAGE", desktop: tepeHpDt, mobile: tepeHpMb },
+      { caption: "PRODUCT_PAGE", desktop: tepePdpDt, mobile: tepePdpMb },
+      { caption: "CART_PAGE", desktop: tepeCpDt, mobile: tepeCpMb },
     ],
   },
   {
