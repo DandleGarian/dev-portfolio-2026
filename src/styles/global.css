@@ -238,3 +238,52 @@ button:not(:disabled) {
     transition: none;
   }
 }
+
+/* ---- Project modal (stacks above the drawer via the top layer) ---- */
+.project-modal {
+  margin: auto; /* centered lightbox */
+  width: min(92vw, 64rem);
+  max-width: none;
+  max-height: 85vh;
+  padding: 0;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* The panel's open/close motion is JS-driven (origin-scale from the
+     triggering card, via the Web Animations API). Backdrop fade is CSS. */
+}
+.project-modal::backdrop {
+  background-color: rgba(19, 19, 19, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.project-modal[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .project-modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+/* Fade the backdrop out while the panel shrinks back to the card on close. */
+.project-modal.is-closing::backdrop {
+  opacity: 0;
+}
+
+/* Hide the carousel scroll-snap track's scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-modal::backdrop {
+    transition: none;
+  }
+}
