@@ -158,3 +158,132 @@ button:not(:disabled) {
     animation: none;
   }
 }
+
+/* ---- Navigation drawer (index only) ---- */
+/* Mobile/tablet: full-screen sheet sliding up from the bottom. */
+.drawer {
+  margin: 0;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--surface);
+  color: var(--foreground);
+  border-top: 1px solid var(--border);
+  transform: translateY(100%);
+  transition:
+    transform 0.3s ease,
+    overlay 0.3s allow-discrete,
+    display 0.3s allow-discrete;
+}
+.drawer[open] {
+  transform: translateY(0);
+}
+@starting-style {
+  .drawer[open] {
+    transform: translateY(100%);
+  }
+}
+
+/* Desktop: ~90vw panel sliding in from the right; index sliver peeks behind. */
+@media (min-width: 1024px) {
+  .drawer {
+    inset: 0 0 0 auto;
+    width: 90vw;
+    border-top: 0;
+    border-left: 2px solid var(--primary); /* orange leading-edge seam */
+    transform: translateX(100%);
+  }
+  .drawer[open] {
+    transform: translateX(0);
+  }
+  @starting-style {
+    .drawer[open] {
+      transform: translateX(100%);
+    }
+  }
+  .drawer::backdrop {
+    backdrop-filter: blur(4px); /* "viewport glass" over the index sliver */
+  }
+}
+
+/* Scrim instead of a shadow — line + tonal lift define the panel. */
+.drawer::backdrop {
+  background-color: rgba(19, 19, 19, 0.72);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    overlay 0.3s allow-discrete,
+    display 0.3s allow-discrete;
+}
+.drawer[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .drawer[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer::backdrop {
+    transition: none;
+  }
+}
+
+/* ---- Project modal (stacks above the drawer via the top layer) ---- */
+.project-modal {
+  margin: auto; /* centered lightbox */
+  width: min(92vw, 64rem);
+  max-width: none;
+  max-height: 85vh;
+  padding: 0;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* The panel's open/close motion is JS-driven (origin-scale from the
+     triggering card, via the Web Animations API). Backdrop fade is CSS. */
+}
+.project-modal::backdrop {
+  background-color: rgba(19, 19, 19, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.project-modal[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .project-modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+/* Fade the backdrop out while the panel shrinks back to the card on close. */
+.project-modal.is-closing::backdrop {
+  opacity: 0;
+}
+
+/* Hide the carousel scroll-snap track's scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-modal::backdrop {
+    transition: none;
+  }
+}
