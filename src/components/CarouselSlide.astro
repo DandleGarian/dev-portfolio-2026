@@ -1,0 +1,63 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  desktop?: ImageMetadata;
+  mobile?: ImageMetadata;
+  caption?: string;
+  index: number;
+  total: number;
+}
+
+const { desktop, mobile, caption, index, total } = Astro.props;
+
+// Optimize each variant to WebP. Don't upscale (cap desktop, keep mobile native).
+const d = desktop
+  ? await getImage({ src: desktop, format: "webp", width: Math.min(desktop.width, 1600) })
+  : null;
+const m = mobile ? await getImage({ src: mobile, format: "webp" }) : null;
+
+const fallback = m ?? d; // the <img> the browser uses below the desktop breakpoint
+const dims = mobile ?? desktop; // source metadata → correct intrinsic ratio (anti-CLS)
+const hasImage = Boolean(fallback);
+---
+
+<li
+  class="pm-slide relative w-full flex-none snap-start"
+  role="group"
+  aria-roledescription="slide"
+  aria-label={`Image ${index + 1} of ${total}`}
+>
+  {
+    hasImage ? (
+      <picture>
+        {d && m && <source media="(min-width: 1024px)" srcset={d.src} />}
+        <img
+          src={fallback!.src}
+          alt={caption ?? `Project screen ${index + 1}`}
+          width={dims?.width}
+          height={dims?.height}
+          class="h-full w-full bg-surface-2 object-contain lg:object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    ) : (
+      <div class="flex h-full w-full flex-col items-center justify-center gap-3 bg-surface-2 text-muted">
+        <span aria-hidden="true" class="material-symbols-outlined text-[48px]">
+          deployed_code
+        </span>
+        <span class="text-label-sm uppercase tracking-widest">SCREEN_0{index + 1}</span>
+      </div>
+    )
+  }
+
+  {
+    caption && (
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-background to-transparent p-4">
+        <span class="text-label-sm uppercase tracking-widest text-foreground">{caption}</span>
+      </div>
+    )
+  }
+</li>

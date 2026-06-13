@@ -1,49 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-
-// Placeholder content — copy to be finalised later.
-const projects = [
-  {
-    id: "PROJECT_01",
-    name: "AEROSPACE_DASHBOARD",
-    specs: ["STACK: REACT / WEBGL", "ROLE: LEAD ENGINEER", "STATUS: DEPLOYED"],
-  },
-  {
-    id: "PROJECT_02",
-    name: "QUANTUM_LEDGER",
-    specs: ["STACK: RUST / WASM", "ROLE: SYSTEMS ARCHITECT", "STATUS: BETA"],
-  },
-  {
-    id: "PROJECT_03",
-    name: "SYNTHETIC_VISION_SYSTEM",
-    feature: true,
-    description:
-      "Real-time terrain rendering engine optimized for low-latency telemetry streams in remote piloting scenarios.",
-    specs: ["STACK: C++ / VULKAN", "ROLE: GRAPHICS ENGINEER", "STATUS: ACTIVE"],
-  },
-  {
-    id: "PROJECT_04",
-    name: "ORBITAL_MECHANICS_API",
-    specs: ["STACK: GO / gRPC", "ROLE: BACKEND ENG", "STATUS: V2.1"],
-  },
-  {
-    id: "PROJECT_05",
-    name: "DATA_LAKE_INGESTION",
-    specs: ["STACK: PYTHON / KAFKA", "ROLE: DATA ENG", "STATUS: MAINTAIN"],
-  },
-];
+import { projects, cardSpecs } from "../data/projects";
 ---
 
 <Layout title="TERMINAL_VELOCITY // WORK_ARCHIVE" active="work">
   <main
-    class="mx-auto w-full max-w-content flex-grow px-5 pb-24 pt-24 md:px-8 md:pt-28 lg:px-16"
+    class="mx-auto w-full max-w-content grow px-5 pb-24 pt-24 md:px-8 md:pt-28 lg:px-16"
   >
     <!-- Section header -->
     <div class="mb-16 max-w-2xl">
-      <h1
-        class="mb-4 text-headline-xl-mobile text-foreground md:text-headline-xl"
-      >
+      <h1 class="mb-4 text-headline-xl-mobile text-foreground md:text-headline-xl">
         02 // WORK_ARCHIVE
       </h1>
       <p class="text-body-lg text-muted">
@@ -54,7 +21,17 @@ const projects = [
 
     <!-- Project grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-      {projects.map((p) => <ProjectCard {...p} />)}
+      {
+        projects.map((p) => (
+          <ProjectCard
+            id={p.id}
+            name={p.name}
+            specs={cardSpecs(p)}
+            description={p.description}
+            feature={p.feature}
+          />
+        ))
+      }
     </div>
   </main>
 </Layout>

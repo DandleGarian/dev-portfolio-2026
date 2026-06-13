@@ -8,16 +8,16 @@ interface Props {
   specs: string[];
   description?: string;
   feature?: boolean;
-  href?: string;
 }
 
-const { id, name, specs, description, feature = false, href = "#" } = Astro.props;
+const { id, name, specs, description, feature = false } = Astro.props;
 ---
 
-<a
-  href={href}
+<button
+  type="button"
+  data-project-id={id}
   class:list={[
-    "group relative block overflow-hidden border border-border bg-surface transition-colors duration-300 hover:border-primary",
+    "group relative block w-full overflow-hidden border border-border bg-surface text-left transition-colors duration-300 hover:border-primary",
     feature && "md:col-span-2",
   ]}
 >
@@ -94,4 +94,4 @@ const { id, name, specs, description, feature = false, href = "#" } = Astro.prop
       </div>
     )
   }
-</a>
+</button>
