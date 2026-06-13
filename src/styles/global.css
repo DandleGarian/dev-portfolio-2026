@@ -238,3 +238,67 @@ button:not(:disabled) {
     transition: none;
   }
 }
+
+/* ---- Project modal (stacks above the drawer via the top layer) ---- */
+.project-modal {
+  margin: auto; /* centered lightbox */
+  width: min(92vw, 64rem);
+  max-width: none;
+  max-height: 85vh;
+  padding: 0;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+.project-modal[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+@starting-style {
+  .project-modal[open] {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+.project-modal::backdrop {
+  background-color: rgba(19, 19, 19, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+.project-modal[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .project-modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Hide the carousel scroll-snap track's scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-modal,
+  .project-modal::backdrop {
+    transition: none;
+  }
+}
