@@ -115,6 +115,16 @@ import CarouselSlide from "./CarouselSlide.astro";
     let goTo: (i: number) => void = () => {};
     let getCurrent: () => number = () => 0;
 
+    const EASE = "cubic-bezier(0.22, 1, 0.36, 1)"; // swift ease-out
+    const DURATION = 220;
+
+    // Anchor the modal's scale to the triggering card ("maximize from / minimize to" it).
+    function anchorTo(el: HTMLElement) {
+      const card = el.getBoundingClientRect();
+      const box = modal!.getBoundingClientRect();
+      modal!.style.transformOrigin = `${card.left + card.width / 2 - box.left}px ${card.top + card.height / 2 - box.top}px`;
+    }
+
     function initCarousel() {
       if (io) {
         io.disconnect();
@@ -123,6 +133,8 @@ import CarouselSlide from "./CarouselSlide.astro";
       const track = body!.querySelector<HTMLElement>(".pm-track");
       const slides = [...body!.querySelectorAll<HTMLElement>(".pm-slide")];
       const dots = [...body!.querySelectorAll<HTMLButtonElement>(".pm-dot")];
+      const titleEl = body!.querySelector<HTMLElement>("#pm-title");
+      const baseTitle = titleEl?.textContent?.trim() ?? "";
       let current = 0;
       getCurrent = () => current;
 
@@ -133,6 +145,11 @@ import CarouselSlide from "./CarouselSlide.astro";
           d.classList.toggle("bg-primary", on);
           d.classList.toggle("bg-border", !on);
         });
+        // Placeholder per-slide copy: a changing index so the swap is visible.
+        if (titleEl && baseTitle) {
+          titleEl.textContent = `${baseTitle} // ${String(i + 1).padStart(2, "0")}`;
+          if (!prefersReduced) titleEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150 });
+        }
       };
       goTo = (i: number) => {
         if (!slides.length) return;
@@ -169,6 +186,38 @@ import CarouselSlide from "./CarouselSlide.astro";
       document.body.style.overflow = "hidden";
       modal!.showModal();
       initCarousel();
+
+      modal!.getAnimations().forEach((a) => a.cancel());
+      if (!prefersReduced && trigger) {
+        anchorTo(trigger);
+        modal!.animate(
+          [
+            { transform: "scale(0.15)", opacity: 0 },
+            { transform: "scale(1)", opacity: 1 },
+          ],
+          { duration: DURATION, easing: EASE },
+        );
+      }
+    }
+
+    function close() {
+      if (prefersReduced || !lastTrigger || !document.contains(lastTrigger)) {
+        modal!.close();
+        return;
+      }
+      anchorTo(lastTrigger);
+      modal!.classList.add("is-closing");
+      const anim = modal!.animate(
+        [
+          { transform: "scale(1)", opacity: 1 },
+          { transform: "scale(0.15)", opacity: 0 },
+        ],
+        { duration: DURATION, easing: EASE, fill: "forwards" },
+      );
+      anim.onfinish = () => {
+        modal!.classList.remove("is-closing");
+        modal!.close();
+      };
     }
 
     // Card triggers are <button data-project-id> — delegated, so they work for
@@ -181,11 +230,14 @@ import CarouselSlide from "./CarouselSlide.astro";
       }
     });
 
-    closeBtn?.addEventListener("click", () => modal.close());
+    closeBtn?.addEventListener("click", () => close());
     modal.addEventListener("click", (event) => {
-      if (event.target === modal) modal.close(); // backdrop / outside the panel
+      if (event.target === modal) close(); // backdrop / outside the panel
     });
-    // ESC is handled natively (closes the top-most dialog = this modal, not the drawer).
+    modal.addEventListener("cancel", (event) => {
+      event.preventDefault(); // animate the close rather than the instant native one
+      close();
+    });
 
     modal.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight") {

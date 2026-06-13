@@ -252,32 +252,14 @@ button:not(:disabled) {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  opacity: 0;
-  transform: scale(0.98);
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
-    overlay 0.25s allow-discrete,
-    display 0.25s allow-discrete;
-}
-.project-modal[open] {
-  opacity: 1;
-  transform: scale(1);
-}
-@starting-style {
-  .project-modal[open] {
-    opacity: 0;
-    transform: scale(0.98);
-  }
+  /* The panel's open/close motion is JS-driven (origin-scale from the
+     triggering card, via the Web Animations API). Backdrop fade is CSS. */
 }
 .project-modal::backdrop {
   background-color: rgba(19, 19, 19, 0.85);
   backdrop-filter: blur(8px);
   opacity: 0;
-  transition:
-    opacity 0.25s ease,
-    overlay 0.25s allow-discrete,
-    display 0.25s allow-discrete;
+  transition: opacity 0.2s ease;
 }
 .project-modal[open]::backdrop {
   opacity: 1;
@@ -286,6 +268,10 @@ button:not(:disabled) {
   .project-modal[open]::backdrop {
     opacity: 0;
   }
+}
+/* Fade the backdrop out while the panel shrinks back to the card on close. */
+.project-modal.is-closing::backdrop {
+  opacity: 0;
 }
 
 /* Hide the carousel scroll-snap track's scrollbar */
@@ -297,7 +283,6 @@ button:not(:disabled) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-modal,
   .project-modal::backdrop {
     transition: none;
   }
