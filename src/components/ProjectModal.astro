@@ -125,6 +125,27 @@ import CarouselSlide from "./CarouselSlide.astro";
       modal!.style.transformOrigin = `${card.left + card.width / 2 - box.left}px ${card.top + card.height / 2 - box.top}px`;
     }
 
+    // Rapid terminal-style type-out, with a trailing blink cursor while typing.
+    let typeTimer: ReturnType<typeof setInterval> | undefined;
+    function typeText(el: HTMLElement, text: string) {
+      clearInterval(typeTimer);
+      if (prefersReduced) {
+        el.textContent = text;
+        el.classList.remove("blink-cursor");
+        return;
+      }
+      el.textContent = "";
+      el.classList.add("blink-cursor");
+      let i = 0;
+      typeTimer = setInterval(() => {
+        el.textContent = text.slice(0, ++i);
+        if (i >= text.length) {
+          clearInterval(typeTimer);
+          el.classList.remove("blink-cursor");
+        }
+      }, 16);
+    }
+
     function initCarousel() {
       if (io) {
         io.disconnect();
@@ -145,10 +166,9 @@ import CarouselSlide from "./CarouselSlide.astro";
           d.classList.toggle("bg-primary", on);
           d.classList.toggle("bg-border", !on);
         });
-        // Placeholder per-slide copy: a changing index so the swap is visible.
+        // Placeholder per-slide copy: type out a changing index so the swap is visible.
         if (titleEl && baseTitle) {
-          titleEl.textContent = `${baseTitle} // ${String(i + 1).padStart(2, "0")}`;
-          if (!prefersReduced) titleEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150 });
+          typeText(titleEl, `${baseTitle} // ${String(i + 1).padStart(2, "0")}`);
         }
       };
       goTo = (i: number) => {
@@ -250,6 +270,7 @@ import CarouselSlide from "./CarouselSlide.astro";
     });
 
     modal.addEventListener("close", () => {
+      clearInterval(typeTimer);
       document.body.style.overflow = savedOverflow; // correct even with the drawer open beneath
       io?.disconnect();
       io = null;
