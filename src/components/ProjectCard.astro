@@ -44,7 +44,7 @@ const { id, name, specs, description, feature = false } = Astro.props;
             </span>
           </div>
           <div class="mt-auto">
-            <h2 class="mb-2 wrap-break-word text-headline-md text-foreground transition-colors duration-300 group-hover:text-primary">
+            <h2 data-scramble class="mb-2 wrap-break-word text-headline-md text-foreground transition-colors duration-300 group-hover:text-primary">
               {name}
             </h2>
             {description && (
@@ -78,7 +78,7 @@ const { id, name, specs, description, feature = false } = Astro.props;
           </span>
         </div>
         <div class="mt-auto">
-          <h2 class="mb-2 wrap-break-word text-headline-md text-foreground transition-colors duration-300 group-hover:text-primary">
+          <h2 data-scramble class="mb-2 wrap-break-word text-headline-md text-foreground transition-colors duration-300 group-hover:text-primary">
             {name}
           </h2>
           <div class="my-4 h-px w-full bg-border transition-colors duration-300 group-hover:bg-primary/30" />

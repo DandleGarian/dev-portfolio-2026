@@ -293,3 +293,9 @@ button:not(:disabled) {
   color: var(--primary);
   opacity: 0.7;
 }
+
+/* Scramble-reveal targets start hidden — only when JS is active (no-JS shows them).
+   opacity (not visibility) keeps the text available to screen readers pre-reveal. */
+.js [data-scramble]:not([data-revealed]) {
+  opacity: 0;
+}
