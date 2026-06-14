@@ -102,6 +102,8 @@ import CarouselSlide from "./CarouselSlide.astro";
 }
 
 <script>
+  import { scrambleText } from "../scripts/text-scramble";
+
   const modal = document.getElementById("project-modal") as HTMLDialogElement | null;
   const body = document.getElementById("pm-body");
   const header = document.getElementById("pm-header");
@@ -145,10 +147,9 @@ import CarouselSlide from "./CarouselSlide.astro";
           d.classList.toggle("bg-primary", on);
           d.classList.toggle("bg-border", !on);
         });
-        // Placeholder per-slide copy: a changing index so the swap is visible.
+        // Placeholder per-slide copy: scramble/decode to a changing index so the swap is visible.
         if (titleEl && baseTitle) {
-          titleEl.textContent = `${baseTitle} // ${String(i + 1).padStart(2, "0")}`;
-          if (!prefersReduced) titleEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150 });
+          scrambleText(titleEl, `${baseTitle} // ${String(i + 1).padStart(2, "0")}`);
         }
       };
       goTo = (i: number) => {
