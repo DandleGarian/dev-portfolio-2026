@@ -40,7 +40,7 @@ export const projects: Project[] = [
   {
     id: 'PROJECT_01',
     name: 'TEPE_USA',
-    role: 'LEAD ENGINEER',
+    role: 'LEAD_ENGINEER / COMMUNICATIONS_LIAISON',
     stack: 'LIQUID / JAVASCRIPT / RUST',
     status: 'DEPLOYED',
     description:
@@ -66,7 +66,7 @@ export const projects: Project[] = [
   {
     id: 'PROJECT_03',
     name: 'EGOE_BASE',
-    role: 'ENGINEER',
+    role: 'FRONTEND_ENGINEER',
     stack: 'LIQUID / JAVASCRIPT',
     status: 'ACTIVE',
     feature: true,
@@ -84,8 +84,8 @@ export const projects: Project[] = [
   {
     id: 'PROJECT_04',
     name: 'YOGGIES',
-    role: 'FRONTEND ENGINEER',
-    stack: 'LIQUID / JAVASCRIPT',
+    role: 'FRONTEND_ENGINEER / EMERGENCY_RESPONDER',
+    stack: 'LIQUID / JAVASCRIPT / REACT',
     status: 'DEPLOYED',
     description:
       'High-precision propagation API for orbital trajectories. gRPC services held to sub-millisecond response budgets.',
@@ -94,9 +94,9 @@ export const projects: Project[] = [
   },
   {
     id: 'PROJECT_05',
-    name: 'DATA_LAKE_INGESTION',
-    role: 'DATA ENG',
-    stack: 'PYTHON / KAFKA',
+    name: 'ECONEA',
+    role: 'FRONTEND_ENGINEER / PERFORMANCE_OPTIMIZER',
+    stack: 'LIQUID / JAVASCRIPT',
     status: 'MAINTAIN',
     description:
       'Streaming ingestion pipeline normalizing terabytes per day. Kafka-backed, schema-validated, idempotent by design.',
