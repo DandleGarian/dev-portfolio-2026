@@ -299,3 +299,19 @@ button:not(:disabled) {
 .js [data-scramble]:not([data-revealed]) {
   opacity: 0;
 }
+
+/* Lesser text — subtle fade + 8px rise; [data-reveal-stagger] cascades its children.
+   Gated to no-preference so reduced-motion users just get the text. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal],
+  .js [data-reveal-stagger] > * {
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
+  .js [data-reveal]:not([data-revealed]),
+  .js [data-reveal-stagger]:not([data-revealed]) > * {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
