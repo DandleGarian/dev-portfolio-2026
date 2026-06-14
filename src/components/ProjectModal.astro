@@ -31,7 +31,7 @@ import CarouselSlide from "./CarouselSlide.astro";
 
 {
   projects.map((p) => (
-    <template id={`pm-${p.id}`}>
+    <template id={`pm-${p.id}`} data-name={p.name}>
       <div class="pm-carousel">
         <ul
           class="pm-track no-scrollbar flex aspect-3/4 snap-x snap-mandatory overflow-x-auto lg:aspect-video"
@@ -45,6 +45,8 @@ import CarouselSlide from "./CarouselSlide.astro";
               desktop={slide.desktop}
               mobile={slide.mobile}
               caption={slide.caption}
+              title={slide.title}
+              body={slide.body}
               index={i}
               total={p.slides.length}
             />
@@ -63,9 +65,11 @@ import CarouselSlide from "./CarouselSlide.astro";
       <div class="flex flex-col gap-6 p-6 md:p-8">
         <div>
           <h3 id="pm-title" class="mb-2 wrap-break-word text-headline-md text-foreground">
-            {p.name}
+            {p.slides[0]?.title ?? p.name}
           </h3>
-          <p class="text-body-md text-muted">{p.description}</p>
+          <p id="pm-desc" class="text-body-md text-muted">
+            {p.slides[0]?.body ?? p.description}
+          </p>
         </div>
 
         <dl class="grid grid-cols-1 gap-4 border-t border-border pt-6 sm:grid-cols-3">
@@ -102,6 +106,8 @@ import CarouselSlide from "./CarouselSlide.astro";
 }
 
 <script>
+  import { scrambleText } from "../scripts/text-scramble";
+
   const modal = document.getElementById("project-modal") as HTMLDialogElement | null;
   const body = document.getElementById("pm-body");
   const header = document.getElementById("pm-header");
@@ -134,7 +140,7 @@ import CarouselSlide from "./CarouselSlide.astro";
       const slides = [...body!.querySelectorAll<HTMLElement>(".pm-slide")];
       const dots = [...body!.querySelectorAll<HTMLButtonElement>(".pm-dot")];
       const titleEl = body!.querySelector<HTMLElement>("#pm-title");
-      const baseTitle = titleEl?.textContent?.trim() ?? "";
+      const descEl = body!.querySelector<HTMLElement>("#pm-desc");
       let current = 0;
       getCurrent = () => current;
 
@@ -145,11 +151,13 @@ import CarouselSlide from "./CarouselSlide.astro";
           d.classList.toggle("bg-primary", on);
           d.classList.toggle("bg-border", !on);
         });
-        // Placeholder per-slide copy: a changing index so the swap is visible.
-        if (titleEl && baseTitle) {
-          titleEl.textContent = `${baseTitle} // ${String(i + 1).padStart(2, "0")}`;
-          if (!prefersReduced) titleEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150 });
+        // Per-slide detail copy (from data-pm-title / data-pm-body on the slide).
+        const slide = slides[i];
+        const title = slide?.dataset.pmTitle?.trim() ?? "";
+        if (titleEl) {
+          scrambleText(titleEl, title ? `${title} // ${String(i + 1).padStart(2, "0")}` : "");
         }
+        if (descEl) descEl.textContent = slide?.dataset.pmBody ?? "";
       };
       goTo = (i: number) => {
         if (!slides.length) return;
@@ -161,7 +169,7 @@ import CarouselSlide from "./CarouselSlide.astro";
         });
       };
       dots.forEach((d, i) => d.addEventListener("click", () => goTo(i)));
-      if (dots.length) setActive(0);
+      if (slides.length) setActive(0);
 
       if (slides.length > 1 && track) {
         io = new IntersectionObserver(
@@ -181,7 +189,7 @@ import CarouselSlide from "./CarouselSlide.astro";
       lastTrigger = trigger;
       body!.replaceChildren(tpl.content.cloneNode(true));
       body!.scrollTop = 0;
-      if (header) header.textContent = `${id} // DETAILS`;
+      if (header) header.textContent = `${id} // ${tpl.dataset.name ?? "DETAILS"}`;
       savedOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       modal!.showModal();

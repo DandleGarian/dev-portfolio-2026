@@ -12,14 +12,14 @@ import Layout from "../layouts/Layout.astro";
         <h1
           class="mb-6 text-headline-xl-mobile uppercase text-foreground md:text-headline-xl"
         >
-          <span class="text-primary">04 //</span> DATA_TRANSMISSION
+          <span class="text-primary">04 //</span> <span data-scramble>DATA_TRANSMISSION</span>
         </h1>
         <div class="max-w-md space-y-4 text-body-md text-muted">
-          <p>
+          <p data-reveal>
             Secure uplink established. Enter required parameters to initialize
             direct communication protocols.
           </p>
-          <div class="mt-8 border-t border-border pt-4">
+          <div data-reveal-stagger class="mt-8 border-t border-border pt-4">
             <div class="flex items-center justify-between py-2 text-label-md">
               <span>STATUS:</span>
               <span id="form-status" class="blink-cursor text-primary"
@@ -37,6 +37,7 @@ import Layout from "../layouts/Layout.astro";
       <!-- Right: form terminal -->
       <div class="w-full lg:w-1/2">
         <form
+          data-reveal
           id="contact-form"
           name="contact"
           method="POST"

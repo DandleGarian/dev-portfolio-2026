@@ -26,6 +26,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
+    <!-- Mark JS active before paint so scramble-reveal targets can hide flash-free. -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
@@ -53,6 +57,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     {(active === "index" || active === "work") && <ProjectModal />}
 
     <script>
+      // Scramble-reveal: decode [data-scramble] elements in as they enter view.
+      import "../scripts/reveal";
+
       // Contact form — submitted via Netlify Forms over fetch (no page reload).
       // Document-delegated so it works on the standalone /contact page AND when
       // the form is injected into the navigation drawer.

@@ -6,11 +6,14 @@ interface Props {
   desktop?: ImageMetadata;
   mobile?: ImageMetadata;
   caption?: string;
+  /** Detail-panel copy for this slide — read by the modal on slide change. */
+  title?: string;
+  body?: string;
   index: number;
   total: number;
 }
 
-const { desktop, mobile, caption, index, total } = Astro.props;
+const { desktop, mobile, caption, title, body, index, total } = Astro.props;
 
 // Optimize each variant to WebP. Don't upscale (cap desktop, keep mobile native).
 const d = desktop
@@ -28,6 +31,8 @@ const hasImage = Boolean(fallback);
   role="group"
   aria-roledescription="slide"
   aria-label={`Image ${index + 1} of ${total}`}
+  data-pm-title={title}
+  data-pm-body={body}
 >
   {
     hasImage ? (
