@@ -60,6 +60,7 @@ export const projects: Project[] = [
     status: 'DEPLOYED',
     description:
       'Distributed ledger with deterministic settlement. Rust core compiled to WASM for trustless in-browser verification.',
+    url: 'https://mojemana.cz/',
     slides: [{ caption: 'CONSENSUS_MAP' }, {}, {}],
   },
   {
@@ -71,7 +72,7 @@ export const projects: Project[] = [
     feature: true,
     description:
       'Real-time terrain rendering engine optimized for low-latency telemetry streams in remote piloting scenarios.',
-    url: 'https://example.com',
+    url: 'https://www.egoe.eu/en',
     slides: [
       { caption: 'TERRAIN_MESH_LOD' },
       { caption: 'DEPTH_BUFFER_DEBUG' },
@@ -85,9 +86,10 @@ export const projects: Project[] = [
     name: 'YOGGIES',
     role: 'FRONTEND ENGINEER',
     stack: 'LIQUID / JAVASCRIPT',
-    status: 'V2.1',
+    status: 'DEPLOYED',
     description:
       'High-precision propagation API for orbital trajectories. gRPC services held to sub-millisecond response budgets.',
+    url: 'https://www.yoggies.com/',
     slides: [{ caption: 'PROPAGATION_GRAPH' }, {}, {}],
   },
   {
