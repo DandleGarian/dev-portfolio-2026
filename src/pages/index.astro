@@ -29,6 +29,7 @@ const bullets = [
 
             <div class="flex flex-col gap-3">
               <div
+                data-reveal
                 class="inline-flex w-fit items-center gap-2 border border-border bg-surface px-3 py-1"
               >
                 <span class="h-2 w-2 bg-primary"></span>
@@ -39,20 +40,20 @@ const bullets = [
               <h1
                 class="blink-cursor text-headline-xl-mobile tracking-tighter text-foreground md:text-headline-xl"
               >
-                SYSTEM_BOOT:<br />HELLO_WORLD
+                <span data-scramble>SYSTEM_BOOT:</span><br /><span data-scramble>HELLO_WORLD</span>
               </h1>
             </div>
           </div>
 
           <!-- Bio -->
           <div class="max-w-2xl space-y-6">
-            <p class="text-body-lg text-muted">
+            <p data-reveal class="text-body-lg text-muted">
               Executing bio sequence... High-fidelity reductionist engineer
               detected. Specializing in the architecture of infinite canvases
               and void spaces.
             </p>
             <div class="border-l border-border pl-4">
-              <ul class="space-y-2">
+              <ul data-reveal-stagger class="space-y-2">
                 {
                   bullets.map((b) => (
                     <li class="flex items-start gap-3 text-label-md text-foreground">
@@ -70,7 +71,7 @@ const bullets = [
           </div>
 
           <!-- CTAs -->
-          <div class="flex flex-col gap-4 sm:flex-row">
+          <div data-reveal-stagger class="flex flex-col gap-4 sm:flex-row">
             <a
               href="/work"
               class="group flex items-center justify-center gap-2 border border-primary px-8 py-4 text-label-md uppercase tracking-widest text-primary transition-colors duration-200 hover:bg-primary hover:text-on-primary"

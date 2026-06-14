@@ -37,12 +37,13 @@ const timeline = [
   >
     <!-- Section header -->
     <div class="mb-16 lg:mb-24">
-      <div class="mb-6 inline-block border border-border px-4 py-2">
+      <div data-reveal class="mb-6 inline-block border border-border px-4 py-2">
         <span class="text-label-md uppercase tracking-widest text-foreground">
           DIAGNOSTIC_REPORT // ID: 8847-A
         </span>
       </div>
       <h1
+        data-scramble
         class="blink-cursor text-headline-xl-mobile text-foreground md:text-headline-xl"
       >
         03 // UNIT_SPECIFICATIONS
@@ -64,11 +65,12 @@ const timeline = [
           >
         </div>
         <h2
+          data-scramble
           class="mb-8 inline-block border-b border-border pb-2 text-headline-md text-foreground"
         >
           HARDWARE_STATS
         </h2>
-        <ul class="space-y-6">
+        <ul data-reveal-stagger class="space-y-6">
           {
             hardwareStats.map((s) => (
               <li class="flex flex-col border-b border-border pb-4 lg:flex-row lg:justify-between lg:gap-4">
@@ -96,7 +98,7 @@ const timeline = [
       <div
         class="flex h-full min-h-75 flex-col justify-between border border-border bg-surface p-8 md:col-span-5"
       >
-        <h3 class="mb-4 text-label-md uppercase text-foreground">
+        <h3 data-reveal class="mb-4 text-label-md uppercase text-foreground">
           OPERATOR_IDENTIFICATION // SCAN_ACTIVE
         </h3>
         <div class="flex grow items-center justify-center p-4">
@@ -125,18 +127,20 @@ const timeline = [
           </div>
         </div>
         <div class="mt-4 text-right">
-          <span class="text-label-sm text-muted">BIO_METRIC_SCAN // REF: ALPHA_ONE</span>
+          <span data-reveal class="text-label-sm text-muted">BIO_METRIC_SCAN // REF: ALPHA_ONE</span>
         </div>
       </div>
 
       <!-- SYSTEM_HISTORY timeline -->
       <div class="border border-border bg-surface p-8 md:col-span-12">
         <h2
+          data-scramble
           class="mb-8 inline-block border-b border-border pb-2 text-headline-md text-foreground"
         >
           SYSTEM_HISTORY
         </h2>
         <div
+          data-reveal-stagger
           class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:-translate-x-px before:bg-border before:content-[''] lg:before:mx-auto lg:before:translate-x-0"
         >
           {
