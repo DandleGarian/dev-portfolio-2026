@@ -50,6 +50,8 @@ const navLinks = [
 </dialog>
 
 <script>
+  import { revealOnView } from "../scripts/reveal";
+
   const drawer = document.getElementById("drawer") as HTMLDialogElement | null;
   const content = document.getElementById("drawer-content");
   const closeBtn = document.getElementById("drawer-close");
@@ -79,6 +81,7 @@ const navLinks = [
       if (doc.title) document.title = doc.title;
       content!.scrollTop = 0;
       updateActive(pathname);
+      revealOnView(content!); // decode any [data-scramble] in the injected content
     }
 
     async function openRoute(pathname: string, newEntry: boolean) {
