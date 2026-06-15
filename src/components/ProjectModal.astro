@@ -117,6 +117,8 @@ import CarouselSlide from "./CarouselSlide.astro";
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lastTrigger: HTMLElement | null = null;
     let savedOverflow = "";
+    let opening = false; // true while the open animation plays (suppresses accidental backdrop dismiss)
+    let backdropPointerDown = false; // press started on the backdrop → a release there is a real dismiss
     let io: IntersectionObserver | null = null;
     let goTo: (i: number) => void = () => {};
     let getCurrent: () => number = () => 0;
@@ -186,29 +188,43 @@ import CarouselSlide from "./CarouselSlide.astro";
     function open(id: string, trigger: HTMLElement | null) {
       const tpl = document.getElementById(`pm-${id}`) as HTMLTemplateElement | null;
       if (!tpl) return;
+      // Recover from any in-flight close: cancel its animation and clear the
+      // half-closed state, so a rapid re-open can never strand the dialog
+      // open-but-invisible (is-closing left on, panel scaled to nothing).
+      modal!.getAnimations().forEach((a) => a.cancel());
+      modal!.classList.remove("is-closing");
+
       lastTrigger = trigger;
       body!.replaceChildren(tpl.content.cloneNode(true));
       body!.scrollTop = 0;
       if (header) header.textContent = `${id} // ${tpl.dataset.name ?? "DETAILS"}`;
-      savedOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      modal!.showModal();
+      if (!modal!.open) {
+        // showModal() throws if the dialog is already open — only call it fresh.
+        savedOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        modal!.showModal();
+      }
       initCarousel();
 
-      modal!.getAnimations().forEach((a) => a.cancel());
       if (!prefersReduced && trigger) {
         anchorTo(trigger);
-        modal!.animate(
+        opening = true;
+        const anim = modal!.animate(
           [
             { transform: "scale(0.15)", opacity: 0 },
             { transform: "scale(1)", opacity: 1 },
           ],
           { duration: DURATION, easing: EASE },
         );
+        anim.onfinish = anim.oncancel = () => {
+          opening = false;
+        };
       }
     }
 
     function close() {
+      // Already closed, or a close is already animating → ignore.
+      if (!modal!.open || modal!.classList.contains("is-closing")) return;
       if (prefersReduced || !lastTrigger || !document.contains(lastTrigger)) {
         modal!.close();
         return;
@@ -239,8 +255,16 @@ import CarouselSlide from "./CarouselSlide.astro";
     });
 
     closeBtn?.addEventListener("click", () => close());
+    // Backdrop dismiss: only when the press AND release both land on the backdrop
+    // (not a drag/swipe out of the panel), and never during the open animation
+    // (the panel is scaled small then, so the opening tap would land on backdrop).
+    modal.addEventListener("pointerdown", (event) => {
+      backdropPointerDown = event.target === modal;
+    });
     modal.addEventListener("click", (event) => {
-      if (event.target === modal) close(); // backdrop / outside the panel
+      const onBackdrop = event.target === modal && backdropPointerDown;
+      backdropPointerDown = false;
+      if (onBackdrop && !opening) close();
     });
     modal.addEventListener("cancel", (event) => {
       event.preventDefault(); // animate the close rather than the instant native one
