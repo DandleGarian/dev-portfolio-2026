@@ -40,7 +40,7 @@ const bullets = [
               <h1
                 class="blink-cursor text-headline-xl-mobile tracking-tighter text-foreground md:text-headline-xl"
               >
-                <span data-scramble>SYSTEM_BOOT:</span><br /><span data-scramble>HELLO_WORLD</span>
+                <span data-scramble>SYSTEM_BOOT:</span><br /><span id="hero-word" data-scramble>HELLO_WORLD</span>
               </h1>
             </div>
           </div>
@@ -81,12 +81,12 @@ const bullets = [
                 >arrow_forward</span
               >
             </a>
-            <button
-              type="button"
-              class="border border-border bg-surface px-8 py-4 text-label-md uppercase tracking-widest text-foreground transition-colors duration-200 hover:bg-foreground hover:text-background"
+            <a
+              href="/specs"
+              class="flex items-center justify-center border border-border bg-surface px-8 py-4 text-label-md uppercase tracking-widest text-foreground transition-colors duration-200 hover:bg-foreground hover:text-background"
             >
               READ_LOGS
-            </button>
+            </a>
           </div>
         </div>
 
@@ -98,4 +98,25 @@ const bullets = [
       </div>
     </div>
   </main>
+
+  <script>
+    // Hero greeting: after the initial decode, the trailing word re-scrambles to
+    // a new greeting every few seconds. scrambleText is diff-aware, so the shared
+    // "HELLO_" prefix stays put and only the word decodes. Paused for reduced motion.
+    import { scrambleText } from "../scripts/text-scramble";
+
+    // EDIT ME — the rotating greetings (keep them uppercase to match the style).
+    const WORDS = ["WORLD", "BUDDY", "SIR", "MADAME", "FOLKS", "BRO", "STRANGER", "LEGEND"];
+    const INTERVAL = 3000;
+
+    const el = document.getElementById("hero-word");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (el && !reduce) {
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % WORDS.length;
+        scrambleText(el, `HELLO_${WORDS[i]}`);
+      }, INTERVAL);
+    }
+  </script>
 </Layout>

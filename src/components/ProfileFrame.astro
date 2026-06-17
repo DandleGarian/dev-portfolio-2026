@@ -35,11 +35,14 @@ const { class: className = "", withLabels = false } = Astro.props;
   <div aria-hidden="true" class="absolute left-0 top-1/2 h-px w-full bg-primary/10"></div>
   <div aria-hidden="true" class="absolute left-1/2 top-0 h-full w-px bg-primary/10"></div>
 
+  <!-- Sweeping scan line (retro-futuristic "scanning" effect). Motion-gated. -->
+  <div aria-hidden="true" class="scan-line"></div>
+
   {
     withLabels && (
       <Fragment>
         <div aria-hidden="true" class="absolute left-2 top-2 z-20 flex flex-col gap-1">
-          <span class="bg-surface/80 px-1 text-[10px] text-primary">ID: TV_RE-001</span>
+          <span class="bg-surface/80 px-1 text-[10px] text-primary">ID: DD_RE-001</span>
           <span class="bg-surface/80 px-1 text-[10px] text-muted">
             OP_TYPE: REDUCTIONIST
           </span>
@@ -52,3 +55,40 @@ const { class: className = "", withLabels = false } = Astro.props;
     )
   }
 </div>
+
+<style>
+  /* Faint orange line sweeping top → bottom over the portrait. Hidden unless
+     motion is allowed (no static line stuck for reduced-motion users). */
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    background: var(--primary);
+    box-shadow: 0 0 8px 1px var(--primary);
+    opacity: 0;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .scan-line {
+      animation: profile-scan 4.5s linear infinite;
+    }
+  }
+  @keyframes profile-scan {
+    0% {
+      top: -2px;
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.5;
+    }
+    88% {
+      opacity: 0.5;
+    }
+    100% {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+</style>
