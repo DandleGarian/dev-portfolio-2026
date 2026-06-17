@@ -301,6 +301,37 @@ button:not(:disabled) {
   user-select: none;
 }
 
+/* Specs timeline: clamp each description with a gradient fade (more-to-read
+   cue), expand smoothly on hover (pointer) or tap (touch → .is-expanded via
+   js/timeline.ts). Clamp is .js-gated so no-JS shows the full text. */
+.js .tl-desc {
+  position: relative;
+  max-height: 4.5rem; /* collapsed peek; js sets max-height to scrollHeight to open */
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.js .tl-desc::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, transparent, var(--surface));
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+/* Open state (hover on pointer / tap on touch — toggled by js/timeline.ts).
+   Drives the description expand (inline max-height), the orange wash, the
+   active border, and hides the fade — matching the cards + stat panels. */
+.js .tl-card.is-open {
+  border-color: var(--primary);
+}
+.js .tl-card.is-open .tl-wash {
+  opacity: 0.03;
+}
+.js .tl-card.is-open .tl-desc::after {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-modal::backdrop {
     transition: none;
