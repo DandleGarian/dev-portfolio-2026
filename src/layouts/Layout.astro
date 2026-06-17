@@ -60,6 +60,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // Scramble-reveal: decode [data-scramble] elements in as they enter view.
       import "../scripts/reveal";
 
+      // Specs timeline: tap-to-expand descriptions on touch devices.
+      import "../scripts/timeline";
+
       // Contact form — submitted via Netlify Forms over fetch (no page reload).
       // Document-delegated so it works on the standalone /contact page AND when
       // the form is injected into the navigation drawer.

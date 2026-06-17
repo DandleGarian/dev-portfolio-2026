@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
+import Logo from "../components/Logo.astro";
 import operatorProfile from "../assets/operator-profile.png";
 
 // Placeholder content — copy to be finalised later.
@@ -13,18 +14,21 @@ const hardwareStats = [
 
 const timeline = [
   {
-    version: "v3.0 // CURRENT_BUILD // 03.2023 - PRESENT",
+    version: "v3.0 // CURRENT_BUILD",
+    dates: "03.2023 - PRESENT",
     title: "Sounds Good Agency - Frontend Dev",
     desc: "SGA prides itself on developing robust solutions for complex e-commerce problems. I have been fortunate to work on a variety of projects, from small modifications to UI facelifts to full-scale builds from scratch. Our company has recently shifted to an AI-first approach and as a result, our workflows have significantly evolved. I have been able to take ownership of my work and contribute to the team in meaningful ways, while also learning from my colleagues and expanding my skill set.",
     active: true,
   },
   {
-    version: "v2.0 // MID_LEVEL_EXPANSION // 06.2022 - 04.2023",
+    version: "v2.0 // MID_LEVEL_EXPANSION",
+    dates: "06.2022 - 04.2023",
     title: "Monumental - Contract Dev",
     desc: "A contract position at this humble little Shopify agency afforded me valuable experience in the world of e-commerce. I was able to work on a variety of projects, from small tweaks to existing sites to full-scale builds from scratch. With the trust of my supervisors and colleagues, I took major strides in my development skills and learned a lot about the inner workings of Shopify and the e-commerce industry as a whole.",
   },
   {
-    version: "v1.0 // INITIAL_BOOT // 08.2015 - 01.2022",
+    version: "v1.0 // INITIAL_BOOT",
+    dates: "08.2015 - 01.2022",
     title: "Primary School Teacher",
     desc: "With strict classroom management but a friendly and playful approach to learning, my students made exceptional scholastic progress while also developing a love for learning. Working in private international schools can be a challenging balancing act. Parents and school administrators ('shareholders') have their own expectations and demands. I have found that being flexible and open-minded is key to success in this field, as it allows me to build strong relationships with students, parents and colleagues alike.",
   },
@@ -56,13 +60,17 @@ const timeline = [
       <div
         class="group relative overflow-hidden border border-border bg-surface p-8 transition-colors duration-300 hover:border-primary md:col-span-7"
       >
+        <!-- orange wash on hover (matches the work-archive cards) -->
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-[0.03]"
+        >
+        </div>
         <div
           aria-hidden="true"
           class="absolute right-0 top-0 p-4 opacity-20 transition-opacity duration-300 group-hover:opacity-100"
         >
-          <span class="material-symbols-outlined text-primary" style="font-size: 48px;"
-            >memory</span
-          >
+          <Logo class="h-12 w-12 text-primary" />
         </div>
         <h2
           data-scramble
@@ -96,9 +104,15 @@ const timeline = [
 
       <!-- OPERATOR_IDENTIFICATION -->
       <div
-        class="flex h-full min-h-75 flex-col justify-between border border-border bg-surface p-8 md:col-span-5"
+        class="group relative flex h-full min-h-75 flex-col justify-between overflow-hidden border border-border bg-surface p-8 transition-colors duration-300 hover:border-primary md:col-span-5"
       >
-        <h3 data-reveal class="mb-4 text-label-md uppercase text-foreground">
+        <!-- orange wash on hover (matches the work-archive cards) -->
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-[0.03]"
+        >
+        </div>
+        <h3 data-reveal class="relative mb-4 text-label-md uppercase text-foreground">
           OPERATOR_IDENTIFICATION // SCAN_ACTIVE
         </h3>
         <div class="flex grow items-center justify-center p-4">
@@ -154,17 +168,20 @@ const timeline = [
                 >
                   <div class:list={["h-3 w-3", e.active ? "bg-primary" : "bg-border"]} />
                 </div>
-                <div class="w-[calc(100%-4rem)] border border-border p-4 transition-colors group-hover:border-primary lg:w-[calc(50%-2.5rem)]">
+                <div class="tl-card w-[calc(100%-4rem)] border border-border p-4 transition-colors group-hover:border-primary lg:w-[calc(50%-2.5rem)]">
                   <span
                     class:list={[
-                      "mb-2 block text-label-sm",
+                      "block text-label-sm",
                       e.active ? "text-primary" : "text-muted",
                     ]}
                   >
                     {e.version}
                   </span>
+                  <span class="mb-2 block text-label-sm text-muted">{e.dates}</span>
                   <h4 class="mb-1 text-body-lg text-foreground">{e.title}</h4>
-                  <p class="text-body-md text-muted">{e.desc}</p>
+                  <div class="tl-desc">
+                    <p class="text-body-md text-muted">{e.desc}</p>
+                  </div>
                 </div>
               </div>
             ))
