@@ -282,15 +282,19 @@ button:not(:disabled) {
   display: none;
 }
 
-/* Carousel click-drag (desktop): grab cursor, and while dragging suppress
-   scroll-snap (it fights direct scrollLeft) and text/image selection. */
+/* Carousel click-drag (desktop): grab cursor while pressed; suppress CSS
+   scroll-snap for the whole gesture (press + the glide after release) so the
+   mandatory snap can't hard-jump on top of the smooth settle animation. */
 .pm-draggable {
   cursor: grab;
 }
 .pm-draggable.is-grabbing {
   cursor: grabbing;
-  scroll-snap-type: none;
   user-select: none;
+}
+.pm-draggable.is-grabbing,
+.pm-draggable.is-settling {
+  scroll-snap-type: none;
 }
 .pm-slide img {
   -webkit-user-drag: none;
