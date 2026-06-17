@@ -188,31 +188,66 @@ import CarouselSlide from "./CarouselSlide.astro";
         slides.forEach((s) => io!.observe(s));
 
         // Click-drag to pan on desktop. Touch already scroll-snaps natively, so
-        // only handle mouse; suppress scroll-snap mid-drag (it fights scrollLeft)
-        // then snap to the nearest slide on release.
+        // only handle mouse. CSS scroll-snap is suspended for the whole gesture
+        // (drag + the glide that follows) because re-enabling `snap-mandatory`
+        // hard-jumps to the nearest slide — that jump is what felt clunky. On
+        // release we glide smoothly to the target ourselves, then restore CSS
+        // snap once the glide has settled (so it never fights the animation).
         track.classList.add("pm-draggable");
         let dragging = false;
         let startX = 0;
         let startScroll = 0;
+        let lastX = 0;
+        let lastT = 0;
+        let velocity = 0; // px/ms, +ve = pointer moving right
+        let settleTimer: number | undefined;
+
+        const FLICK = 0.35; // px/ms — above this, advance a slide in the flick direction
+
+        const settle = (index: number) => {
+          const w = track.clientWidth || 1;
+          const maxIdx = slides.length - 1;
+          const target = Math.max(0, Math.min(maxIdx, index));
+          track.scrollTo({ left: target * w, behavior: prefersReduced ? "auto" : "smooth" });
+          // Restore CSS snap only after the glide lands, so mandatory-snap
+          // doesn't jump on top of the smooth scroll.
+          clearTimeout(settleTimer);
+          settleTimer = window.setTimeout(
+            () => track.classList.remove("is-settling"),
+            prefersReduced ? 0 : 450,
+          );
+        };
+
         track.addEventListener("pointerdown", (e) => {
           if (e.pointerType !== "mouse") return;
+          clearTimeout(settleTimer);
           dragging = true;
-          startX = e.clientX;
+          startX = lastX = e.clientX;
           startScroll = track.scrollLeft;
+          lastT = e.timeStamp;
+          velocity = 0;
           track.setPointerCapture(e.pointerId);
-          track.classList.add("is-grabbing");
+          track.classList.add("is-grabbing", "is-settling"); // grabbing = cursor; settling = snap off
         });
         track.addEventListener("pointermove", (e) => {
           if (!dragging) return;
           track.scrollLeft = startScroll - (e.clientX - startX);
+          const dt = e.timeStamp - lastT;
+          if (dt > 0) velocity = (e.clientX - lastX) / dt;
+          lastX = e.clientX;
+          lastT = e.timeStamp;
         });
         const endDrag = (e: PointerEvent) => {
           if (!dragging) return;
           dragging = false;
-          track.classList.remove("is-grabbing");
+          track.classList.remove("is-grabbing"); // press over → cursor back to grab
           if (track.hasPointerCapture(e.pointerId)) track.releasePointerCapture(e.pointerId);
-          const w = track.clientWidth;
-          if (w) goTo(Math.round(track.scrollLeft / w)); // settle on nearest slide
+          const w = track.clientWidth || 1;
+          const pos = track.scrollLeft / w; // fractional slide position
+          let target = Math.round(pos);
+          if (velocity <= -FLICK) target = Math.ceil(pos); // flick left → next slide
+          else if (velocity >= FLICK) target = Math.floor(pos); // flick right → prev slide
+          settle(target);
         };
         track.addEventListener("pointerup", endDrag);
         track.addEventListener("pointercancel", endDrag);
