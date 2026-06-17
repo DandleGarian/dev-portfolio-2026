@@ -66,10 +66,7 @@ const timeline = [
           class="pointer-events-none absolute inset-0 bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-[0.03]"
         >
         </div>
-        <div
-          aria-hidden="true"
-          class="absolute right-0 top-0 p-4 opacity-20 transition-opacity duration-300 group-hover:opacity-100"
-        >
+        <div aria-hidden="true" class="absolute right-0 top-0 p-4">
           <Logo class="h-12 w-12 text-primary" />
         </div>
         <h2
@@ -168,10 +165,16 @@ const timeline = [
                 >
                   <div class:list={["h-3 w-3", e.active ? "bg-primary" : "bg-border"]} />
                 </div>
-                <div class="tl-card w-[calc(100%-4rem)] border border-border p-4 transition-colors group-hover:border-primary lg:w-[calc(50%-2.5rem)]">
+                <div class="tl-card relative w-[calc(100%-4rem)] overflow-hidden border border-border p-4 transition-colors lg:w-[calc(50%-2.5rem)]">
+                  <!-- orange wash on open/hover (matches the cards + stat panels) -->
+                  <div
+                    aria-hidden="true"
+                    class="tl-wash pointer-events-none absolute inset-0 bg-primary opacity-0 transition-opacity duration-300"
+                  >
+                  </div>
                   <span
                     class:list={[
-                      "block text-label-sm",
+                      "mb-1 block text-label-md",
                       e.active ? "text-primary" : "text-muted",
                     ]}
                   >

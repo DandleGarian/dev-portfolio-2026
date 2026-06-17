@@ -319,7 +319,16 @@ button:not(:disabled) {
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
-.js .tl-desc.is-open::after {
+/* Open state (hover on pointer / tap on touch — toggled by js/timeline.ts).
+   Drives the description expand (inline max-height), the orange wash, the
+   active border, and hides the fade — matching the cards + stat panels. */
+.js .tl-card.is-open {
+  border-color: var(--primary);
+}
+.js .tl-card.is-open .tl-wash {
+  opacity: 0.03;
+}
+.js .tl-card.is-open .tl-desc::after {
   opacity: 0;
 }
 

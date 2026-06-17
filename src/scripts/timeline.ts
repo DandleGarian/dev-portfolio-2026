@@ -9,9 +9,9 @@ const canHover =
 
 function setOpen(card: Element, open: boolean) {
   const desc = card.querySelector<HTMLElement>(".tl-desc");
-  if (!desc) return;
-  desc.style.maxHeight = open ? `${desc.scrollHeight}px` : "";
-  desc.classList.toggle("is-open", open);
+  if (desc) desc.style.maxHeight = open ? `${desc.scrollHeight}px` : "";
+  // is-open on the card drives the expand, wash, border and fade together.
+  card.classList.toggle("is-open", open);
 }
 
 if (canHover) {
@@ -27,9 +27,6 @@ if (canHover) {
 } else {
   document.addEventListener("click", (e) => {
     const card = (e.target as Element)?.closest?.(".tl-card");
-    if (card) {
-      const desc = card.querySelector<HTMLElement>(".tl-desc");
-      setOpen(card, !desc?.classList.contains("is-open"));
-    }
+    if (card) setOpen(card, !card.classList.contains("is-open"));
   });
 }
