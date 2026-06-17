@@ -43,6 +43,7 @@ const hasImage = Boolean(fallback);
           alt={caption ?? `Project screen ${index + 1}`}
           width={dims?.width}
           height={dims?.height}
+          draggable={false}
           class="h-full w-full bg-surface-2 object-contain lg:object-cover"
           loading="lazy"
           decoding="async"

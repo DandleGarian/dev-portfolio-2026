@@ -72,7 +72,7 @@ import CarouselSlide from "./CarouselSlide.astro";
           </p>
         </div>
 
-        <dl class="grid grid-cols-1 gap-4 border-t border-border pt-6 sm:grid-cols-3">
+        <dl class="grid grid-cols-1 gap-4 border-t border-border pt-6 sm:grid-cols-2">
           <div>
             <dt class="mb-1 text-label-sm uppercase text-muted">ROLE</dt>
             <dd class="text-body-md text-foreground">{p.role}</dd>
@@ -84,6 +84,10 @@ import CarouselSlide from "./CarouselSlide.astro";
           <div>
             <dt class="mb-1 text-label-sm uppercase text-muted">STATUS</dt>
             <dd class="text-body-md text-primary">{p.status}</dd>
+          </div>
+          <div>
+            <dt class="mb-1 text-label-sm uppercase text-muted">GROUND_CONTROL</dt>
+            <dd class="text-body-md text-foreground">{p.partnership}</dd>
           </div>
         </dl>
 
@@ -182,6 +186,37 @@ import CarouselSlide from "./CarouselSlide.astro";
           { root: track, threshold: 0.6 },
         );
         slides.forEach((s) => io!.observe(s));
+
+        // Click-drag to pan on desktop. Touch already scroll-snaps natively, so
+        // only handle mouse; suppress scroll-snap mid-drag (it fights scrollLeft)
+        // then snap to the nearest slide on release.
+        track.classList.add("pm-draggable");
+        let dragging = false;
+        let startX = 0;
+        let startScroll = 0;
+        track.addEventListener("pointerdown", (e) => {
+          if (e.pointerType !== "mouse") return;
+          dragging = true;
+          startX = e.clientX;
+          startScroll = track.scrollLeft;
+          track.setPointerCapture(e.pointerId);
+          track.classList.add("is-grabbing");
+        });
+        track.addEventListener("pointermove", (e) => {
+          if (!dragging) return;
+          track.scrollLeft = startScroll - (e.clientX - startX);
+        });
+        const endDrag = (e: PointerEvent) => {
+          if (!dragging) return;
+          dragging = false;
+          track.classList.remove("is-grabbing");
+          if (track.hasPointerCapture(e.pointerId)) track.releasePointerCapture(e.pointerId);
+          const w = track.clientWidth;
+          if (w) goTo(Math.round(track.scrollLeft / w)); // settle on nearest slide
+        };
+        track.addEventListener("pointerup", endDrag);
+        track.addEventListener("pointercancel", endDrag);
+        track.addEventListener("dragstart", (e) => e.preventDefault()); // no native image drag
       }
     }
 

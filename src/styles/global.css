@@ -282,6 +282,21 @@ button:not(:disabled) {
   display: none;
 }
 
+/* Carousel click-drag (desktop): grab cursor, and while dragging suppress
+   scroll-snap (it fights direct scrollLeft) and text/image selection. */
+.pm-draggable {
+  cursor: grab;
+}
+.pm-draggable.is-grabbing {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+.pm-slide img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-modal::backdrop {
     transition: none;
