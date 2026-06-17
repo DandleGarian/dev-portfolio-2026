@@ -1,4 +1,6 @@
 ---
+import ToneSwitcher from "./ToneSwitcher.astro";
+
 const social: { label: string; href: string }[] = [
   { label: "GITHUB", href: "https://github.com/DandleGarian" },
   { label: "LINKEDIN", href: "https://www.linkedin.com/in/daniel-dulgerian/" },
@@ -12,6 +14,10 @@ const social: { label: string; href: string }[] = [
     <p class="text-label-sm uppercase text-muted">
       © 2026 DEV_DAN // ALL_SYSTEMS_GO
     </p>
+
+    <!-- Copy-tone switcher (mobile/tablet — desktop has it in the header) -->
+    <ToneSwitcher class="lg:hidden" />
+
     <ul class="flex flex-wrap justify-center gap-4">
       {
         social.map((s) => (

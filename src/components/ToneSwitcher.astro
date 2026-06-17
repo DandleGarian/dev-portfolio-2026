@@ -1,0 +1,27 @@
+---
+// Copy-tone selector. Renders professional by default (SSR); src/scripts/tone.ts
+// wires the change handler, persistence and the scramble swap. Placed in the
+// header (desktop) and footer (mobile) — both instances stay in sync.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const tones = [
+  { value: "professional", label: "PROFESSIONAL" },
+  { value: "casual", label: "IRRESPONSIBLY_CASUAL" },
+  { value: "machine", label: "MACHINE_CODE" },
+];
+---
+
+<label class:list={["inline-flex items-center gap-2", className]}>
+  <span class="sr-only">Copy tone</span>
+  <span aria-hidden="true" class="material-symbols-outlined text-[18px] text-muted">translate</span>
+  <select
+    data-tone-select
+    aria-label="Copy tone"
+    class="cursor-pointer border border-border bg-surface px-2 py-1 text-label-sm uppercase tracking-widest text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none"
+  >
+    {tones.map((t) => <option value={t.value}>{t.label}</option>)}
+  </select>
+</label>

@@ -51,6 +51,7 @@ const navLinks = [
 
 <script>
   import { revealOnView } from "../scripts/reveal";
+  import { applyTone } from "../scripts/tone";
 
   const drawer = document.getElementById("drawer") as HTMLDialogElement | null;
   const content = document.getElementById("drawer-content");
@@ -81,6 +82,7 @@ const navLinks = [
       if (doc.title) document.title = doc.title;
       content!.scrollTop = 0;
       updateActive(pathname);
+      applyTone(content!); // re-apply the active copy tone to injected [data-i18n]
       revealOnView(content!); // decode any [data-scramble] in the injected content
     }
 

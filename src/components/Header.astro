@@ -1,4 +1,6 @@
 ---
+import ToneSwitcher from "./ToneSwitcher.astro";
+
 type PageId = "index" | "work" | "specs" | "contact";
 
 interface Props {
@@ -49,14 +51,17 @@ const links: { id: PageId; label: string; href: string }[] = [
       }
     </nav>
 
-    <!-- Desktop trailing action -->
-    <button
-      type="button"
-      aria-label="Terminal"
-      class="hidden p-2 text-muted transition-colors hover:text-primary lg:flex"
-    >
-      <span aria-hidden="true" class="material-symbols-outlined">terminal</span>
-    </button>
+    <!-- Desktop trailing: copy-tone switcher + terminal action -->
+    <div class="hidden items-center gap-4 lg:flex">
+      <ToneSwitcher />
+      <button
+        type="button"
+        aria-label="Terminal"
+        class="p-2 text-muted transition-colors hover:text-primary"
+      >
+        <span aria-hidden="true" class="material-symbols-outlined">terminal</span>
+      </button>
+    </div>
 
     <!-- Mobile trailing action: hamburger on the index, CLOSE→home elsewhere -->
     {
