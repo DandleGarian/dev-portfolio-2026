@@ -45,6 +45,8 @@ export interface Project {
   role: string;
   stack: string;
   status: string;
+  /** Collaborating agency credit — shown as GROUND_CONTROL on card + modal. */
+  partnership: string;
   /** Blurb on the feature card (the modal copy now lives per-slide). */
   description: string;
   /** External project link → CTA renders only when present. */
@@ -62,6 +64,7 @@ export const projects: Project[] = [
     role: 'LEAD_ENGINEER / COMMUNICATIONS_LIAISON',
     stack: 'LIQUID / JAVASCRIPT / RUST',
     status: 'DEPLOYED',
+    partnership: 'SOUNDS_GOOD_AGENCY',
     description:
       'Dental industry gold-standard oral hygiene e-commerce platform. Fully responsive, accessible, and performant.',
     url: 'https://www.tepeusa.com/',
@@ -83,6 +86,7 @@ export const projects: Project[] = [
     role: 'ENGINEER / BUG_HUNTER',
     stack: 'RUST / JAVASCRIPT / LIQUID / SCSS / REACT',
     status: 'DEPLOYED',
+    partnership: 'SOUNDS_GOOD_AGENCY',
     description:
       'Aerospace-inspired health supplement e-commerce platform with dynamic product pages, progression discounts, and personalized upsells.',
     url: 'https://mojemana.cz/',
@@ -104,6 +108,7 @@ export const projects: Project[] = [
     role: 'FRONTEND_ENGINEER',
     stack: 'LIQUID / JAVASCRIPT',
     status: 'ACTIVE',
+    partnership: 'SOUNDS_GOOD_AGENCY',
     feature: true,
     description:
       'Multi-storefront e-commerce platform with dynamic vehicle-compatibility filtering. Responsive, accessible, and performant.',
@@ -132,6 +137,7 @@ export const projects: Project[] = [
     role: 'FRONTEND_ENGINEER / EMERGENCY_RESPONDER',
     stack: 'LIQUID / JAVASCRIPT / REACT',
     status: 'DEPLOYED',
+    partnership: 'SOUNDS_GOOD_AGENCY',
     description:
       'High-quality pet food e-commerce platform with dynamic product pages, personalized upsells, and tiered gift offers. Fully responsive and accessible.',
     url: 'https://www.yoggies.com/',
@@ -159,6 +165,7 @@ export const projects: Project[] = [
     role: 'FRONTEND_ENGINEER / PERFORMANCE_OPTIMIZER',
     stack: 'LIQUID / JAVASCRIPT',
     status: 'MAINTAIN',
+    partnership: 'SOUNDS_GOOD_AGENCY',
     description:
       'Health and wellness e-commerce platform with dynamic product pages, sticky add-to-cart, and performance optimizations for fast page load times.',
     slides: [
@@ -180,4 +187,5 @@ export const cardSpecs = (p: Project): string[] => [
   `STACK: ${p.stack}`,
   `ROLE: ${p.role}`,
   `STATUS: ${p.status}`,
+  `GROUND_CONTROL: ${p.partnership}`,
 ];
