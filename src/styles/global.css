@@ -332,6 +332,96 @@ button:not(:disabled) {
   opacity: 0;
 }
 
+/* ---- Custom scrollbar (1c): squared, themed, orange on hover ---- */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 3px solid var(--background); /* inset → slim, squared thumb */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ---- Link hover "boomerang" underline (1e) ---- */
+/* Sweeps in from the left to full width, then out to the right — one pass per
+   hover. Motion-gated; reduced-motion just gets the colour change. */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--foreground);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .link-sweep:hover::after {
+    animation: link-sweep 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+@keyframes link-sweep {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  50.01% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+/* ---- Mobile menu unfurl (1d): high-velocity grid-rows expand ---- */
+.mobile-nav {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+.mobile-nav > div {
+  overflow: hidden;
+  min-height: 0; /* let the grid row collapse fully */
+}
+.mobile-nav.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+@media (min-width: 1024px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project-modal::backdrop {
     transition: none;
