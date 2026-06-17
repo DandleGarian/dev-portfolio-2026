@@ -1,0 +1,25 @@
+---
+// Brand "D" mark (mirrors public/favicon.svg) as inline SVG so it inherits
+// currentColor and can be sized/themed via utility classes. The blinking
+// cursor block keeps the terminal character. aria-hidden — decorative.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 32 32"
+  aria-hidden="true"
+  class:list={["text-current", className]}
+>
+  <rect x="4" y="4" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" />
+  <path
+    d="M10 10V22H16C19 22 21 20 21 16C21 12 19 10 16 10H10ZM13 13H15C17 13 18 14 18 16C18 18 17 19 15 19H13V13Z"
+    fill="currentColor"
+  />
+  <rect x="21" y="20" width="4" height="2" fill="currentColor">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" />
+  </rect>
+</svg>
