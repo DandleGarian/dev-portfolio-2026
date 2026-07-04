@@ -3,11 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ProfileFrame from "../components/ProfileFrame.astro";
 import { copy } from "../data/copy";
 
-const bullets = [
-  { pre: "Forging ", hi: "high-fidelity designs", post: " that prioritize technical clarity." },
-  { pre: "Delivering ", hi: "precision-engineered web experiences", post: " across Shopify ecosystems." },
-  { pre: "Constantly evolving ", hi: "and adapting", post: " to new technologies and design paradigms." },
-];
+const bulletKeys = ["home.bullet1", "home.bullet2", "home.bullet3"];
 ---
 
 <Layout title="DEV_DAN // INDEX" active="index">
@@ -34,8 +30,8 @@ const bullets = [
                 class="inline-flex w-fit items-center gap-2 border border-border bg-surface px-3 py-1"
               >
                 <span class="h-2 w-2 bg-primary"></span>
-                <span data-i18n="home.status" class="text-label-sm uppercase tracking-widest text-primary">
-                  {copy["home.status"].professional}
+                <span class="text-label-sm uppercase tracking-widest text-primary">
+                  STATUS: ONLINE // SECURE
                 </span>
               </div>
               <h1
@@ -54,14 +50,10 @@ const bullets = [
             <div class="border-l border-border pl-4">
               <ul data-reveal-stagger class="space-y-2">
                 {
-                  bullets.map((b) => (
+                  bulletKeys.map((key) => (
                     <li class="flex items-start gap-3 text-label-md text-foreground">
                       <span class="mt-1.5 h-1 w-1 shrink-0 bg-primary" />
-                      <span>
-                        {b.pre}
-                        {b.hi && <span class="text-primary">{b.hi}</span>}
-                        {b.post}
-                      </span>
+                      <span data-i18n={key}>{copy[key].professional}</span>
                     </li>
                   ))
                 }

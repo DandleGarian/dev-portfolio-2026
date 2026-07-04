@@ -12,22 +12,32 @@
 //     out on purpose — keep this to prose/flavour strings.
 // ─────────────────────────────────────────────────────────────────────────
 
-export type Tone = "professional" | "casual" | "machine";
+export type Tone = 'professional' | 'casual' | 'machine';
 export type CopyEntry = Record<Tone, string>;
 
 export const copy: Record<string, CopyEntry> = {
   // ---- Home ----
-  'home.status': {
-    professional: 'STATUS: ONLINE // SECURE',
-    casual: '[CASUAL] home.status',
-    machine: '[MACHINE] home.status',
-  },
   'home.bio': {
     professional:
       "I'm a frontend developer with a background in education. I specialize in crafting high-fidelity Shopify themes and web experiences that are both technically robust and visually precise. My work is informed by a commitment to clarity, efficiency, and user-centric design.",
     casual:
       "Hey, when I'm not building good-ass Shopify themes for Sounds Good Agency, you can find me kicking back with the wife and cats, watching dope movies, chilling on the porch or flinging pizza dough in the air.",
     machine: '[MACHINE] home.bio',
+  },
+  'home.bullet1': {
+    professional: 'Forging high-fidelity designs that prioritize technical clarity.',
+    casual: 'Making websites that look good and work even better.',
+    machine: '[MACHINE] home.bullet1',
+  },
+  'home.bullet2': {
+    professional: 'Delivering precision-engineered web experiences across Shopify ecosystems.',
+    casual: 'Knows Shopify like the back of my hand. Can make it do anything.',
+    machine: '[MACHINE] home.bullet2',
+  },
+  'home.bullet3': {
+    professional: 'Constantly evolving and adapting to new technologies and design paradigms.',
+    casual: 'Always learning new stuff and ',
+    machine: '[MACHINE] home.bullet3',
   },
 
   // ---- Work ----
@@ -43,17 +53,17 @@ export const copy: Record<string, CopyEntry> = {
   'specs.core': {
     professional: 'Caffeine-Fueled Synaptic Engine v2.4',
     casual: '[CASUAL] specs.core',
-    machine: '[MACHINE] specs.core',
+    machine: 'Caffeine-Fueled Synaptic Engine v2.4',
   },
   'specs.drive': {
     professional: '100% Motivated (Frequent Defragmentation Req.)',
-    casual: 'Not a quitter',
-    machine: '[MACHINE] specs.drive',
+    casual: 'Allergic to quitting',
+    machine: '100% Motivated (Frequent Defragmentation Req.)',
   },
   'specs.humor': {
     professional: 'ENABLED [Warning: Dry]',
     casual: 'Sarcastic / Deadpan / Sometimes Funny',
-    machine: '[MACHINE] specs.humor',
+    machine: 'ENABLED [Warning: Dry]',
   },
   'specs.detail': {
     professional: 'Obsessive / Pixel Perfect',
@@ -63,8 +73,9 @@ export const copy: Record<string, CopyEntry> = {
 
   // ---- Contact ----
   'contact.intro': {
-    professional: 'Secure uplink established. Enter required parameters to initialize direct communication protocols.',
-    casual: '[CASUAL] contact.intro',
+    professional: 'Prepared to accept transmissions. Patiently awaiting correspondence from terrestrial parties.',
+    casual:
+      "Drop me a line and I'll get back to you ASAP. Like, in a matter of 1-2 business days. Any longer would be rude, right?",
     machine: 'Secure uplink established. Enter required parameters to initialize direct communication protocols.',
   },
 };
