@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { copy } from "../data/copy";
 ---
 
 <Layout title="DEV_DAN // DATA_TRANSMISSION" active="contact">
@@ -15,9 +16,8 @@ import Layout from "../layouts/Layout.astro";
           <span class="text-primary">04 //</span> <span data-scramble>DATA_TRANSMISSION</span>
         </h1>
         <div class="max-w-md space-y-4 text-body-md text-muted">
-          <p data-reveal>
-            Secure uplink established. Enter required parameters to initialize
-            direct communication protocols.
+          <p data-reveal data-i18n="contact.intro">
+            {copy["contact.intro"].professional}
           </p>
           <div data-reveal-stagger class="mt-8 border-t border-border pt-4">
             <div class="flex items-center justify-between py-2 text-label-md">

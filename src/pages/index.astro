@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProfileFrame from "../components/ProfileFrame.astro";
+import { copy } from "../data/copy";
 
 const bullets = [
   { pre: "Forging ", hi: "high-fidelity designs", post: " that prioritize technical clarity." },
@@ -33,8 +34,8 @@ const bullets = [
                 class="inline-flex w-fit items-center gap-2 border border-border bg-surface px-3 py-1"
               >
                 <span class="h-2 w-2 bg-primary"></span>
-                <span class="text-label-sm uppercase tracking-widest text-primary">
-                  STATUS: ONLINE // SECURE
+                <span data-i18n="home.status" class="text-label-sm uppercase tracking-widest text-primary">
+                  {copy["home.status"].professional}
                 </span>
               </div>
               <h1
@@ -47,8 +48,8 @@ const bullets = [
 
           <!-- Bio -->
           <div class="max-w-2xl space-y-6">
-            <p data-reveal class="text-body-lg text-muted">
-              I'm a frontend developer with a background in education. I specialize in crafting high-fidelity Shopify themes and web experiences that are both technically robust and visually precise. My work is informed by a commitment to clarity, efficiency, and user-centric design.
+            <p data-reveal data-i18n="home.bio" class="text-body-lg text-muted">
+              {copy["home.bio"].professional}
             </p>
             <div class="border-l border-border pl-4">
               <ul data-reveal-stagger class="space-y-2">

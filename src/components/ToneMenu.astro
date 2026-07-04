@@ -1,0 +1,33 @@
+---
+// Copy-tone selector as a vertical option group, styled like the nav. Used in
+// both the header dropdown (desktop) and the hamburger menu (mobile). Behaviour
+// (active state, persistence, scramble swap) is wired in src/scripts/tone.ts.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const tones = [
+  { value: "professional", label: "PROFESSIONAL" },
+  { value: "casual", label: "IRRESPONSIBLY_CASUAL" },
+  { value: "machine", label: "MACHINE_CODE" },
+];
+---
+
+<div class:list={["tone-menu flex flex-col", className]} role="group" aria-label="Copy tone">
+  <span class="px-2 pb-1 text-label-sm uppercase tracking-widest text-muted">// TONE</span>
+  {
+    tones.map((t) => (
+      <button
+        type="button"
+        data-tone-option
+        data-tone-value={t.value}
+        aria-pressed="false"
+        class="tone-option flex w-full items-center gap-2 p-2 text-left text-label-md uppercase"
+      >
+        <span aria-hidden="true" class="tone-caret">&gt;</span>
+        <span>{t.label}</span>
+      </button>
+    ))
+  }
+</div>
