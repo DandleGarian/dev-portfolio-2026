@@ -394,6 +394,39 @@ html {
   }
 }
 
+/* ---- Copy-tone selector (option group + desktop dropdown) ---- */
+.tone-option {
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.tone-option:hover {
+  color: var(--foreground);
+}
+.tone-option .tone-caret {
+  color: var(--primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.tone-option[aria-pressed="true"] {
+  color: var(--primary);
+}
+.tone-option[aria-pressed="true"] .tone-caret {
+  opacity: 1;
+}
+/* Desktop dropdown: strip the native <details> marker, spin the caret when open. */
+.tone-dd > summary {
+  list-style: none;
+}
+.tone-dd > summary::-webkit-details-marker {
+  display: none;
+}
+.tone-dd-caret {
+  transition: transform 0.2s ease;
+}
+.tone-dd[open] .tone-dd-caret {
+  transform: rotate(180deg);
+}
+
 /* ---- Mobile menu unfurl (1d): high-velocity grid-rows expand ---- */
 .mobile-nav {
   display: grid;

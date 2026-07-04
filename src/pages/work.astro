@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { projects, cardSpecs } from "../data/projects";
+import { copy } from "../data/copy";
 ---
 
 <Layout title="DEV_DAN // WORK_ARCHIVE" active="work">
@@ -13,10 +14,8 @@ import { projects, cardSpecs } from "../data/projects";
       <h1 data-scramble class="mb-4 text-headline-xl-mobile text-foreground md:text-headline-xl">
         02 // WORK_ARCHIVE
       </h1>
-      <p data-reveal class="text-body-lg text-muted">
-        A selection of high-fidelity Shopify theme artifacts. Executed with strict
-        adherence to minimal tolerances and robust system architectures.
-        Launched seamlessly via ground control (Sounds Good Agency).
+      <p data-reveal data-i18n="work.intro" class="text-body-lg text-muted">
+        {copy["work.intro"].professional}
       </p>
     </div>
 
