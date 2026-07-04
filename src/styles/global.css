@@ -35,12 +35,12 @@
   --surface: #ffffff;
   --surface-2: #f4f3f3;
   --border: #c4c7c8;
-  --border-active: #ff6b00;
+  --border-active: #c24e00;
   --foreground: #1a1c1c;
   --muted: rgba(26, 28, 28, 0.62);
-  --primary: #ff6b00;
+  --primary: #c24e00; /* burnt orange — ~4.6:1 on the light bg (bright #ff6b00 fails) */
   --primary-tint: #ffb693;
-  --on-primary: #131313;
+  --on-primary: #ffffff; /* white reads better than dark on the darker orange */
   --error: #ba1a1a;
   --error-bg: #ffdad6;
   --grid-line: #ececec;
@@ -393,6 +393,13 @@ html {
     transform: scaleX(0);
     transform-origin: right center;
   }
+}
+
+/* Light mode: lift the grayscale portraits so their dark backdrop reads as a
+   soft high-key scan instead of a hard black block on the light page. Dark mode
+   keeps the moody Tailwind filters on the element. */
+[data-theme="light"] .theme-portrait {
+  filter: grayscale(1) brightness(1.12) contrast(0.9);
 }
 
 /* ---- Copy-tone selector (option group + desktop dropdown) ---- */
