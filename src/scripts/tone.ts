@@ -4,6 +4,7 @@
 // reflected on any [data-tone-option] control. See src/data/copy.ts for strings.
 import { copy, type Tone } from "../data/copy";
 import { scrambleText } from "./text-scramble";
+import { parseHighlight, hasHighlight } from "./highlight";
 
 const KEY = "tone";
 const TONES: Tone[] = ["professional", "casual", "machine"];
@@ -29,8 +30,25 @@ export function applyTone(
     const entry = copy[el.dataset.i18n ?? ""];
     if (!entry) return;
     const text = entry[tone] ?? entry.professional;
-    if (animate) scrambleText(el, text);
+    if (hasHighlight(text)) renderSegments(el, text, animate);
+    else if (animate) scrambleText(el, text);
     else el.textContent = text;
+  });
+}
+
+// Rebuild a `*marked*` string as highlighted segment spans and (optionally)
+// scramble each in, so the decode effect survives the accent markup.
+function renderSegments(el: HTMLElement, text: string, animate: boolean) {
+  const segments = parseHighlight(text);
+  const spans = segments.map((s) => {
+    const span = document.createElement("span");
+    if (s.hi) span.className = "text-primary";
+    return span;
+  });
+  el.replaceChildren(...spans);
+  segments.forEach((s, i) => {
+    if (animate) scrambleText(spans[i], s.text);
+    else spans[i].textContent = s.text;
   });
 }
 

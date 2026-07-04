@@ -31,6 +31,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <script is:inline>
       document.documentElement.classList.add("js");
       try {
+        var theme = localStorage.getItem("theme");
+        if (theme) document.documentElement.setAttribute("data-theme", theme);
         var tone = localStorage.getItem("tone");
         if (tone) document.documentElement.setAttribute("data-tone", tone);
       } catch (e) {}
