@@ -28,7 +28,8 @@
   --grid-line: #1a1a1a; /* decorative tech-grid background */
 }
 
-/* PROVISIONAL — refine when light mode is built. Accent stays #ff6b00. */
+/* Light theme. Accent stays #ff6b00; on-primary is dark so button text stays
+   readable on orange (white-on-orange fails contrast). */
 :root[data-theme="light"] {
   --background: #faf9f9;
   --surface: #ffffff;
@@ -36,13 +37,13 @@
   --border: #c4c7c8;
   --border-active: #ff6b00;
   --foreground: #1a1c1c;
-  --muted: rgba(26, 28, 28, 0.6);
+  --muted: rgba(26, 28, 28, 0.62);
   --primary: #ff6b00;
   --primary-tint: #ffb693;
-  --on-primary: #ffffff;
+  --on-primary: #131313;
   --error: #ba1a1a;
   --error-bg: #ffdad6;
-  --grid-line: #ededed; /* provisional */
+  --grid-line: #ececec;
 }
 
 /* colors → utilities (inline so opacity modifiers + theme swap both work) */

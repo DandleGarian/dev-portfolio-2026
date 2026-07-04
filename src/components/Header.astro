@@ -50,9 +50,9 @@ const links: { id: PageId; label: string; href: string }[] = [
       }
     </nav>
 
-    <!-- Desktop trailing: tone dropdown + terminal action -->
-    <div class="hidden items-center gap-3 lg:flex">
-      <details class="tone-dd relative">
+    <!-- Trailing: tone dropdown (desktop) + theme toggle (all) + hamburger (mobile) -->
+    <div class="flex items-center gap-3">
+      <details class="tone-dd relative hidden lg:block">
         <summary
           class="tone-dd-summary flex cursor-pointer items-center gap-1 p-2 text-label-md uppercase text-muted transition-colors hover:text-primary"
         >
@@ -70,27 +70,29 @@ const links: { id: PageId; label: string; href: string }[] = [
       </details>
 
       <button
+        id="theme-toggle"
         type="button"
-        aria-label="Terminal"
+        aria-label="Switch to light mode"
         class="p-2 text-muted transition-colors hover:text-primary"
       >
-        <span aria-hidden="true" class="material-symbols-outlined">terminal</span>
+        <span id="theme-toggle-icon" aria-hidden="true" class="material-symbols-outlined">
+          light_mode
+        </span>
+      </button>
+
+      <button
+        id="nav-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="p-2 text-foreground transition-colors hover:text-primary lg:hidden"
+      >
+        <span id="nav-toggle-icon" aria-hidden="true" class="material-symbols-outlined">
+          menu
+        </span>
       </button>
     </div>
-
-    <!-- Mobile: hamburger (the menu holds nav + tone) -->
-    <button
-      id="nav-toggle"
-      type="button"
-      aria-label="Open menu"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-      class="p-2 text-foreground transition-colors hover:text-primary lg:hidden"
-    >
-      <span id="nav-toggle-icon" aria-hidden="true" class="material-symbols-outlined">
-        menu
-      </span>
-    </button>
   </div>
 
   <!-- Mobile menu (all pages): nav links + copy-tone selector -->
@@ -143,6 +145,31 @@ const links: { id: PageId; label: string; href: string }[] = [
   menu?.addEventListener("click", (event) => {
     if ((event.target as Element)?.closest?.("a")) setOpen(false);
   });
+
+  // Light/dark toggle. Pre-paint script (Layout) sets the initial data-theme
+  // from localStorage; here we flip + persist it and keep the icon in sync.
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-toggle-icon");
+  function syncTheme() {
+    const dark = document.documentElement.getAttribute("data-theme") !== "light";
+    if (themeIcon) themeIcon.textContent = dark ? "light_mode" : "dark_mode";
+    themeToggle?.setAttribute(
+      "aria-label",
+      dark ? "Switch to light mode" : "Switch to dark mode",
+    );
+  }
+  themeToggle?.addEventListener("click", () => {
+    const next =
+      document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      /* ignore */
+    }
+    syncTheme();
+  });
+  syncTheme();
 
   // Desktop tone dropdown: native <details> handles the toggle; add light-dismiss.
   const dd = document.querySelector<HTMLDetailsElement>(".tone-dd");
