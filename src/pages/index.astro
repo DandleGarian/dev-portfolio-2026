@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import ProfileFrame from "../components/ProfileFrame.astro";
 import { copy } from "../data/copy";
+import { parseHighlight } from "../scripts/highlight";
 
 const bulletKeys = ["home.bullet1", "home.bullet2", "home.bullet3"];
 ---
@@ -53,7 +54,11 @@ const bulletKeys = ["home.bullet1", "home.bullet2", "home.bullet3"];
                   bulletKeys.map((key) => (
                     <li class="flex items-start gap-3 text-label-md text-foreground">
                       <span class="mt-1.5 h-1 w-1 shrink-0 bg-primary" />
-                      <span data-i18n={key}>{copy[key].professional}</span>
+                      <span data-i18n={key}>
+                        {parseHighlight(copy[key].professional).map((s) => (
+                          <span class={s.hi ? "text-primary" : undefined}>{s.text}</span>
+                        ))}
+                      </span>
                     </li>
                   ))
                 }

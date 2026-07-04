@@ -25,18 +25,18 @@ export const copy: Record<string, CopyEntry> = {
     machine: '[MACHINE] home.bio',
   },
   'home.bullet1': {
-    professional: 'Forging high-fidelity designs that prioritize technical clarity.',
+    professional: 'Forging *high-fidelity designs* that prioritize technical clarity.',
     casual: 'Making websites that look good and work even better.',
     machine: '[MACHINE] home.bullet1',
   },
   'home.bullet2': {
-    professional: 'Delivering precision-engineered web experiences across Shopify ecosystems.',
+    professional: 'Delivering *precision-engineered web experiences* across Shopify ecosystems.',
     casual: 'Knows Shopify like the back of my hand. Can make it do anything.',
     machine: '[MACHINE] home.bullet2',
   },
   'home.bullet3': {
-    professional: 'Constantly evolving and adapting to new technologies and design paradigms.',
-    casual: 'Always learning new stuff and ',
+    professional: 'Constantly evolving *and adapting* to new technologies and design paradigms.',
+    casual: 'Always learning new stuff and trying my best to stay ahead of the curve.',
     machine: '[MACHINE] home.bullet3',
   },
 
@@ -51,17 +51,17 @@ export const copy: Record<string, CopyEntry> = {
 
   // ---- Specs (hardware-stat values) ----
   'specs.core': {
-    professional: 'Caffeine-Fueled Synaptic Engine v2.4',
-    casual: '[CASUAL] specs.core',
+    professional: 'Routine-driven, dependable, caffeinated',
+    casual: 'Got a good routine going, coffee helps',
     machine: 'Caffeine-Fueled Synaptic Engine v2.4',
   },
   'specs.drive': {
-    professional: '100% Motivated (Frequent Defragmentation Req.)',
+    professional: 'Set on continuous loop until mission complete',
     casual: 'Allergic to quitting',
     machine: '100% Motivated (Frequent Defragmentation Req.)',
   },
   'specs.humor': {
-    professional: 'ENABLED [Warning: Dry]',
+    professional: 'Dry sense of humor (often misinterpreted)',
     casual: 'Sarcastic / Deadpan / Sometimes Funny',
     machine: 'ENABLED [Warning: Dry]',
   },
