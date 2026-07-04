@@ -28,21 +28,22 @@
   --grid-line: #1a1a1a; /* decorative tech-grid background */
 }
 
-/* PROVISIONAL — refine when light mode is built. Accent stays #ff6b00. */
+/* Light theme. Accent stays #ff6b00; on-primary is dark so button text stays
+   readable on orange (white-on-orange fails contrast). */
 :root[data-theme="light"] {
   --background: #faf9f9;
   --surface: #ffffff;
   --surface-2: #f4f3f3;
   --border: #c4c7c8;
-  --border-active: #ff6b00;
+  --border-active: #c24e00;
   --foreground: #1a1c1c;
-  --muted: rgba(26, 28, 28, 0.6);
-  --primary: #ff6b00;
+  --muted: rgba(26, 28, 28, 0.62);
+  --primary: #c24e00; /* burnt orange — ~4.6:1 on the light bg (bright #ff6b00 fails) */
   --primary-tint: #ffb693;
-  --on-primary: #ffffff;
+  --on-primary: #ffffff; /* white reads better than dark on the darker orange */
   --error: #ba1a1a;
   --error-bg: #ffdad6;
-  --grid-line: #ededed; /* provisional */
+  --grid-line: #ececec;
 }
 
 /* colors → utilities (inline so opacity modifiers + theme swap both work) */
@@ -392,6 +393,46 @@ html {
     transform: scaleX(0);
     transform-origin: right center;
   }
+}
+
+/* Light mode: lift the grayscale portraits so their dark backdrop reads as a
+   soft high-key scan instead of a hard black block on the light page. Dark mode
+   keeps the moody Tailwind filters on the element. */
+[data-theme="light"] .theme-portrait {
+  filter: grayscale(1) brightness(1.12) contrast(0.9);
+}
+
+/* ---- Copy-tone selector (option group + desktop dropdown) ---- */
+.tone-option {
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.tone-option:hover {
+  color: var(--foreground);
+}
+.tone-option .tone-caret {
+  color: var(--primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.tone-option[aria-pressed="true"] {
+  color: var(--primary);
+}
+.tone-option[aria-pressed="true"] .tone-caret {
+  opacity: 1;
+}
+/* Desktop dropdown: strip the native <details> marker, spin the caret when open. */
+.tone-dd > summary {
+  list-style: none;
+}
+.tone-dd > summary::-webkit-details-marker {
+  display: none;
+}
+.tone-dd-caret {
+  transition: transform 0.2s ease;
+}
+.tone-dd[open] .tone-dd-caret {
+  transform: rotate(180deg);
 }
 
 /* ---- Mobile menu unfurl (1d): high-velocity grid-rows expand ---- */

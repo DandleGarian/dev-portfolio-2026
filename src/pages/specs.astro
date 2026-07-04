@@ -2,14 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Logo from "../components/Logo.astro";
+import { copy } from "../data/copy";
 import operatorProfile from "../assets/operator-profile.png";
 
-// Placeholder content — copy to be finalised later.
+// Values live in src/data/copy.ts (tone-switchable); reference them by key.
 const hardwareStats = [
-  { label: "Core_Processor", value: "Caffeine-Fueled Synaptic Engine v2.4" },
-  { label: "Hard_Drive", value: "100% Motivated (Frequent Defragmentation Req.)" },
-  { label: "Humor_Core", value: "ENABLED [Warning: Dry]", highlight: true },
-  { label: "Detail_Precision", value: "Obsessive / Pixel Perfect" },
+  { label: "Core_Processor", key: "specs.core" },
+  { label: "Hard_Drive", key: "specs.drive" },
+  { label: "Humor_Core", key: "specs.humor", highlight: true },
+  { label: "Detail_Precision", key: "specs.detail" },
 ];
 
 const timeline = [
@@ -91,7 +92,7 @@ const timeline = [
                   {s.highlight && (
                     <span aria-hidden="true" class="h-2 w-2 shrink-0 bg-primary" />
                   )}
-                  {s.value}
+                  <span data-i18n={s.key}>{copy[s.key].professional}</span>
                 </span>
               </li>
             ))
@@ -127,7 +128,7 @@ const timeline = [
                 width={480}
                 height={720}
                 format="webp"
-                class="h-auto w-full grayscale contrast-125 brightness-90"
+                class="theme-portrait h-auto w-full grayscale contrast-125 brightness-90"
               />
               <!-- corner brackets -->
               <div aria-hidden="true" class="absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary"></div>

@@ -26,9 +26,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <!-- Mark JS active before paint so scramble-reveal targets can hide flash-free. -->
+    <!-- Mark JS active before paint so scramble-reveal targets can hide flash-free;
+         restore the saved copy tone early so the switcher reflects it. -->
     <script is:inline>
       document.documentElement.classList.add("js");
+      try {
+        var theme = localStorage.getItem("theme");
+        if (theme) document.documentElement.setAttribute("data-theme", theme);
+        var tone = localStorage.getItem("tone");
+        if (tone) document.documentElement.setAttribute("data-tone", tone);
+      } catch (e) {}
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
@@ -62,6 +69,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       // Specs timeline: tap-to-expand descriptions on touch devices.
       import "../scripts/timeline";
+
+      // Copy-tone switcher (professional / casual / machine).
+      import "../scripts/tone";
 
       // Contact form — submitted via Netlify Forms over fetch (no page reload).
       // Document-delegated so it works on the standalone /contact page AND when

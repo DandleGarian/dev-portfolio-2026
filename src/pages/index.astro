@@ -1,12 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProfileFrame from "../components/ProfileFrame.astro";
+import { copy } from "../data/copy";
+import { parseHighlight } from "../scripts/highlight";
 
-const bullets = [
-  { pre: "Forging ", hi: "high-fidelity designs", post: " that prioritize technical clarity." },
-  { pre: "Delivering ", hi: "precision-engineered web experiences", post: " across Shopify ecosystems." },
-  { pre: "Constantly evolving ", hi: "and adapting", post: " to new technologies and design paradigms." },
-];
+const bulletKeys = ["home.bullet1", "home.bullet2", "home.bullet3"];
 ---
 
 <Layout title="DEV_DAN // INDEX" active="index">
@@ -47,19 +45,19 @@ const bullets = [
 
           <!-- Bio -->
           <div class="max-w-2xl space-y-6">
-            <p data-reveal class="text-body-lg text-muted">
-              I'm a frontend developer with a background in education. I specialize in crafting high-fidelity Shopify themes and web experiences that are both technically robust and visually precise. My work is informed by a commitment to clarity, efficiency, and user-centric design.
+            <p data-reveal data-i18n="home.bio" class="text-body-lg text-muted">
+              {copy["home.bio"].professional}
             </p>
             <div class="border-l border-border pl-4">
               <ul data-reveal-stagger class="space-y-2">
                 {
-                  bullets.map((b) => (
+                  bulletKeys.map((key) => (
                     <li class="flex items-start gap-3 text-label-md text-foreground">
                       <span class="mt-1.5 h-1 w-1 shrink-0 bg-primary" />
-                      <span>
-                        {b.pre}
-                        {b.hi && <span class="text-primary">{b.hi}</span>}
-                        {b.post}
+                      <span data-i18n={key}>
+                        {parseHighlight(copy[key].professional).map((s) => (
+                          <span class={s.hi ? "text-primary" : undefined}>{s.text}</span>
+                        ))}
                       </span>
                     </li>
                   ))
@@ -106,7 +104,7 @@ const bullets = [
     import { scrambleText } from "../scripts/text-scramble";
 
     // EDIT ME — the rotating greetings (keep them uppercase to match the style).
-    const WORDS = ["WORLD", "BUDDY", "SIR", "MADAME", "FOLKS", "BRO", "STRANGER", "LEGEND"];
+    const WORDS = ["WORLD", "BUDDY", "GUY", "FRIEND", "SIR", "MADAME", "FOLKS", "MATE", "BRO", "STRANGER", "CHIEF", "LEGEND"];
     const INTERVAL = 3000;
 
     const el = document.getElementById("hero-word");
